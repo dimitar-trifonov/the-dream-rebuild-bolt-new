@@ -148,7 +148,7 @@ export default function MissionExplorationPage() {
                         aspect-square rounded-lg p-2 flex items-center justify-center relative
                         transition-all duration-200
                         ${isCurrentPosition ? 'ring-2 ring-dream-primary' : ''}
-                        ${isValidNextMove ? 'hover:bg-dream-primary/10 cursor-pointer' : 'cursor-not-allowed'}
+                        ${isValidNextMove && ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) ? 'hover:bg-dream-primary/10 cursor-pointer' : 'cursor-default'}
                         ${terrain?.timeCost === null ? 'bg-gray-200' : 'bg-dream-zone-bg'}
                       `}
                     >
