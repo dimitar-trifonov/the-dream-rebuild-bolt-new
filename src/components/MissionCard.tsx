@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Book, Bot } from 'lucide-react';
+import { Book, Bot, Info } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
 import { usePlayerState } from '../hooks/usePlayerState';
 
@@ -79,16 +79,23 @@ export default function MissionCard({ missionId, zoneId }: MissionCardProps) {
       </div>
 
       {/* Action Buttons */}
-      <div className="space-y-2">
+      <div className="space-y-2 flex gap-2">
+        <button
+          onClick={() => navigate(`/mission/${missionId}`)}
+          className="px-4 py-2 bg-dream-secondary hover:bg-dream-secondary/90 rounded-lg transition flex items-center gap-2"
+        >
+          <Info className="w-4 h-4" />
+          <span>Details</span>
+        </button>
         <button
           onClick={handleStartMission}
-          className={`w-full px-4 py-2 rounded-lg transition ${
+          className={`flex-1 px-4 py-2 rounded-lg transition ${
             hasAllSkills
               ? 'bg-dream-primary hover:bg-dream-primary-hover text-white'
               : 'bg-gray-100 text-gray-500'
           }`}
         >
-          {hasAllSkills ? 'Start Mission' : 'Train Required Skills'}
+          {hasAllSkills ? 'Start Mission' : 'Train Skills'}
         </button>
       </div>
 
