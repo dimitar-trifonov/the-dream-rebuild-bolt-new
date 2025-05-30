@@ -1,37 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Settings, RefreshCw, Code } from 'lucide-react';
-
-const exampleConfig = {
-  goals: [
-    {
-      id: "goal1",
-      title: "Restore Nature",
-      description: "Heal the damaged ecosystem",
-      themeColor: "bg-dream-primary",
-      icon: "🌿",
-    },
-    {
-      id: "goal2",
-      title: "Rebuild Community Trust",
-      description: "Foster connections and understanding",
-      themeColor: "bg-dream-secondary",
-      icon: "🤝",
-    }
-  ]
-};
+import { useGameData } from '../hooks/useGameData';
+import { usePlayerState } from '../hooks/usePlayerState';
 
 export default function ConfigPage() {
   const navigate = useNavigate();
-  const [selectedGoal, setSelectedGoal] = useState<string | null>(null);
+  const { goals } = useGameData();
+  const { playerState, actions } = usePlayerState();
 
   const handleGoalSelect = (goalId: string) => {
-    setSelectedGoal(goalId);
+    actions.setGoal(goalId);
   };
 
   const handleReset = () => {
-    setSelectedGoal(null);
-    // In a real app, this would clear PlayerProfile and WorldState
+    actions.resetState();
     navigate('/choose-goal');
   };
 
@@ -50,12 +33,12 @@ export default function ConfigPage() {
         <section className="bg-white rounded-2xl p-8 shadow-md">
           <h2 className="text-2xl font-interface mb-6">Available Goals</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {exampleConfig.goals.map((goal) => (
+            {goals.map((goal) => (
               <button
                 key={goal.id}
                 onClick={() => handleGoalSelect(goal.id)}
                 className={`p-4 rounded-lg border-2 transition ${
-                  selectedGoal === goal.id
+                  playerState.selectedGoalId === goal.id
                     ? 'border-dream-primary bg-dream-primary/10'
                     : 'border-gray-200 hover:border-dream-primary/50'
                 }`}
@@ -80,7 +63,7 @@ export default function ConfigPage() {
           </div>
           <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto">
             <code className="text-sm text-gray-700">
-              {JSON.stringify(exampleConfig, null, 2)}
+              {JSON.stringify(goals, null, 2)}
             </code>
           </pre>
         </section>
