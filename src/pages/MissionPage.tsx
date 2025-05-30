@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Target, Tool, Bot, Book, ArrowLeft, Play } from 'lucide-react';
+import { Target, PenTool as Tool, Bot, Book, ArrowLeft, Play } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
 import { usePlayerState } from '../hooks/usePlayerState';
 
