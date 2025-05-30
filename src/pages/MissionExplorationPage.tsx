@@ -131,15 +131,18 @@ export default function MissionExplorationPage() {
                   );
                   const isCurrentPosition = x === currentPosition[0] && y === currentPosition[1];
                   const isValidNextMove = isValidMove(x, y);
+                  
+                  // Calculate dx and dy here, before they're used
+                  const dx = Math.abs(x - currentPosition[0]);
+                  const dy = Math.abs(y - currentPosition[1]);
+                  const isAdjacent = (dx === 1 && dy === 0) || (dx === 0 && dy === 1);
 
                   return (
                     <button
                       key={`${x}-${y}`}
                       onClick={() => {
                         // Only allow moving to adjacent tiles
-                        const dx = Math.abs(x - currentPosition[0]);
-                        const dy = Math.abs(y - currentPosition[1]);
-                        if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
+                        if (isAdjacent) {
                           handleMove(x, y);
                         }
                       }}
@@ -148,7 +151,7 @@ export default function MissionExplorationPage() {
                         aspect-square rounded-lg p-2 flex items-center justify-center relative
                         transition-all duration-200
                         ${isCurrentPosition ? 'ring-2 ring-dream-primary' : ''}
-                        ${isValidNextMove && ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) ? 'hover:bg-dream-primary/10 cursor-pointer' : 'cursor-default'}
+                        ${isValidNextMove && isAdjacent ? 'hover:bg-dream-primary/10 cursor-pointer' : 'cursor-default'}
                         ${terrain?.timeCost === null ? 'bg-gray-200' : 'bg-dream-zone-bg'}
                       `}
                     >
