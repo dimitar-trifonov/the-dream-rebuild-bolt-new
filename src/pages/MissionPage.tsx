@@ -8,11 +8,12 @@ export default function MissionPage() {
   const { missionId } = useParams();
   const navigate = useNavigate();
   const { playerState, actions } = usePlayerState();
-  const { currentWorld } = useGameData(playerState.selectedGoalId);
+  const { currentWorld, zones } = useGameData(playerState.selectedGoalId);
   const [isTrainingModalOpen, setIsTrainingModalOpen] = useState(false);
 
   const mission = currentWorld?.missions.find(m => m.id === missionId);
   const event = currentWorld?.worldEvents.find(e => e.id === missionId);
+  const zone = zones?.find(z => z.missions.includes(missionId || ''));
 
   if (!mission || !currentWorld) {
     navigate('/map');
@@ -52,6 +53,9 @@ export default function MissionPage() {
       return;
     }
     actions.startMission(missionId);
+    if (zone) {
+      navigate(`/zone/${zone.id}/explore`);
+    }
   };
 
   return (
