@@ -151,12 +151,13 @@ export default function MissionExplorationPage() {
                         ${isValidNextMove ? 'hover:bg-dream-primary/10 cursor-pointer' : 'cursor-not-allowed'}
                         ${terrain?.timeCost === null ? 'bg-gray-200' : 'bg-dream-zone-bg'}
                       `}
+                      style={{ position: 'relative' }}
                     >
                       {location?.items.map((item, idx) => {
                         if (item.type === 'terrain') {
                           const terrainData = currentWorld.terrain.find(t => t.id === item.id);
                           return (
-                            <span key={idx} className="text-2xl">
+                            <span key={idx} className="absolute bottom-1 right-1 text-2xl opacity-50">
                               {terrainData?.icon}
                             </span>
                           );
@@ -164,24 +165,24 @@ export default function MissionExplorationPage() {
                         if (item.type === 'tools') {
                           const tool = currentWorld.tools.find(t => t.id === item.id);
                           return (
-                            <span key={idx} className="absolute text-xl">
-                              {tool?.icon}
+                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl">
+                              <Tool className="w-6 h-6 text-dream-primary" />
                             </span>
                           );
                         }
                         if (item.type === 'aiNodes') {
                           const node = currentWorld.aiNodes.find(n => n.id === item.id);
                           return (
-                            <span key={idx} className="absolute text-xl">
-                              {node?.icon}
+                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl">
+                              <Bot className="w-6 h-6 text-dream-primary" />
                             </span>
                           );
                         }
                         if (item.type === 'worldEvents') {
                           const event = currentWorld.worldEvents.find(e => e.id === item.id);
                           return (
-                            <span key={idx} className="absolute text-xl">
-                              {event?.icon}
+                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl">
+                              <Target className="w-6 h-6 text-dream-contrast" />
                             </span>
                           );
                         }
