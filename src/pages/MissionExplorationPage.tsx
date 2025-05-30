@@ -165,7 +165,25 @@ export default function MissionExplorationPage() {
                           const tool = currentWorld.tools.find(t => t.id === item.id);
                           return (
                             <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                              <Tool className="w-4 h-4 text-dream-primary" />
+                              <svg
+                                className="w-4 h-4 text-dream-primary"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <circle cx="12" cy="12" r="3" />
+                                <path d="M12 2l1.5 5h-3L12 2z" />
+                                <path d="M12 22l-1.5-5h3L12 22z" />
+                                <path d="M2 12l5 1.5v-3L2 12z" />
+                                <path d="M22 12l-5-1.5v3L22 12z" />
+                                <path d="M19.07 4.93l-3.54 3.54 2.12 2.12 3.54-3.54-2.12-2.12z" />
+                                <path d="M4.93 19.07l3.54-3.54-2.12-2.12-3.54 3.54 2.12 2.12z" />
+                                <path d="M19.07 19.07l-3.54-3.54 2.12-2.12 3.54 3.54-2.12 2.12z" />
+                                <path d="M4.93 4.93l3.54 3.54-2.12 2.12-3.54-3.54 2.12-2.12z" />
+                              </svg>
                               <span className="text-xs mt-1">{tool?.name}</span>
                             </span>
                           );
@@ -215,7 +233,25 @@ export default function MissionExplorationPage() {
                     const tool = currentWorld.tools.find(t => t.id === item.id);
                     return (
                       <div key={idx} className="flex items-center gap-2">
-                        <Tool className="w-4 h-4 text-dream-primary" />
+                        <svg
+                          className="w-4 h-4 text-dream-primary"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="3" />
+                          <path d="M12 2l1.5 5h-3L12 2z" />
+                          <path d="M12 22l-1.5-5h3L12 22z" />
+                          <path d="M2 12l5 1.5v-3L2 12z" />
+                          <path d="M22 12l-5-1.5v3L22 12z" />
+                          <path d="M19.07 4.93l-3.54 3.54 2.12 2.12 3.54-3.54-2.12-2.12z" />
+                          <path d="M4.93 19.07l3.54-3.54-2.12-2.12-3.54 3.54 2.12 2.12z" />
+                          <path d="M19.07 19.07l-3.54-3.54 2.12-2.12 3.54 3.54-2.12 2.12z" />
+                          <path d="M4.93 4.93l3.54 3.54-2.12 2.12-3.54-3.54 2.12-2.12z" />
+                        </svg>
                         <span>{tool?.name}</span>
                       </div>
                     );
