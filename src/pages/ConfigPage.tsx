@@ -60,14 +60,21 @@ export default function ConfigPage() {
           <section className="bg-white rounded-2xl p-8 shadow-md">
             <h2 className="text-2xl font-interface mb-6">World Configuration Summary</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-center gap-3">
                   <Map className="w-5 h-5 text-dream-primary" />
                   <div>
                     <h3 className="font-medium">Zones</h3>
-                    <p className="text-sm text-gray-600">
-                      {zones?.length || 0} explorable areas with unique missions and challenges
-                    </p>
+                    <div className="text-sm text-gray-600 space-y-2">
+                      <p>{zones?.length || 0} explorable areas</p>
+                      <ul className="list-disc list-inside pl-2 space-y-1">
+                        {zones?.map(zone => (
+                          <li key={zone.id}>
+                            {zone.name}: {zone.gridSize[0]}x{zone.gridSize[1]} grid
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
                 
@@ -118,27 +125,20 @@ export default function ConfigPage() {
                   <div>
                     <h3 className="font-medium">World Themes</h3>
                     <p className="text-sm text-gray-600">
-                      {currentWorld?.worldPrompt.worldThemes.length || 0} guiding principles
+                      {currentWorld?.worldPrompt.worldThemes.join(', ')}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
+            <div className="mt-6 p-4 bg-dream-zone-bg rounded-lg">
+              <h3 className="font-medium mb-2">World Philosophy</h3>
+              <p className="text-sm text-gray-600 italic">
+                {currentGoal?.worldPhilosophy}
+              </p>
+            </div>
           </section>
         )}
-
-        {/* World Preview */}
-        <section className="bg-white rounded-2xl p-8 shadow-md">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-interface">World Structure</h2>
-            <Code className="w-6 h-6 text-dream-primary" />
-          </div>
-          <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto">
-            <code className="text-sm text-gray-700">
-              {JSON.stringify(goals, null, 2)}
-            </code>
-          </pre>
-        </section>
 
         {/* Reset Button */}
         <section className="bg-white rounded-2xl p-8 shadow-md">
