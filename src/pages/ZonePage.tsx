@@ -23,15 +23,13 @@ export default function ZonePage() {
   const { playerState, actions } = usePlayerState();
   const { zones, currentGoal, currentWorld } = useGameData(playerState.selectedGoalId || undefined);
 
+  // Call useMemo for zone before any conditional returns
   const zone = useMemo(() => zones?.find(z => z.id === zoneId), [zones, zoneId]);
 
-  if (!zone || !currentGoal || !currentWorld) {
-    navigate('/map');
-    return null;
-  }
-
-  // Transform zone locations into a 2D grid
+  // Call useMemo for grid before any conditional returns, but guard the calculation
   const grid = useMemo(() => {
+    if (!zone) return [];
+
     const gridData: GridCell[][] = Array(zone.gridSize[1]).fill(null)
       .map(() => Array(zone.gridSize[0]).fill(null));
 
@@ -52,6 +50,12 @@ export default function ZonePage() {
 
     return gridData;
   }, [zone]);
+
+  // Early return after all hooks are called
+  if (!zone || !currentGoal || !currentWorld) {
+    navigate('/map');
+    return null;
+  }
 
   const isAdjacent = (current: number[], target: number[]): boolean => {
     const [cx, cy] = current;
