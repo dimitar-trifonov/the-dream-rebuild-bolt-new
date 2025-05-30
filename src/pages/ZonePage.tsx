@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Map, Target, PenTool as Tool, Bot } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
 import { usePlayerState } from '../hooks/usePlayerState';
+import MissionCard from '../components/MissionCard';
 
 type GridItem = {
   type: string;
@@ -98,7 +99,9 @@ export default function ZonePage() {
       <main className="max-w-5xl mx-auto">
         <div className="grid gap-8 grid-cols-1 lg:grid-cols-3">
           {/* Zone Grid */}
-          <div className="lg:col-span-2 bg-white rounded-2xl p-8 shadow-md">
+          <div className="lg:col-span-2">
+            {/* Grid */}
+            <div className="bg-white rounded-2xl p-8 shadow-md mb-8">
             <div 
               className="grid gap-2" 
               style={{ 
@@ -143,6 +146,24 @@ export default function ZonePage() {
                   </button>
                 );
               })}
+            </div>
+            </div>
+
+            {/* Missions */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-interface flex items-center gap-2">
+                <Target className="w-6 h-6 text-dream-primary" />
+                Available Missions
+              </h2>
+              <div className="space-y-4">
+                {zone.missions.map(missionId => (
+                  <MissionCard 
+                    key={missionId}
+                    missionId={missionId}
+                    zoneId={zone.id}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
