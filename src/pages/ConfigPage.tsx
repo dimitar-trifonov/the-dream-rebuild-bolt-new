@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Settings, RefreshCw, Code } from 'lucide-react';
+import { Settings, RefreshCw, Code, Book, Map, Tool, Bot, Target } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
 import { usePlayerState } from '../hooks/usePlayerState';
 
@@ -54,6 +54,78 @@ export default function ConfigPage() {
             ))}
           </div>
         </section>
+
+        {/* World Summary */}
+        {playerState.selectedGoalId && (
+          <section className="bg-white rounded-2xl p-8 shadow-md">
+            <h2 className="text-2xl font-interface mb-6">World Configuration Summary</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Map className="w-5 h-5 text-dream-primary" />
+                  <div>
+                    <h3 className="font-medium">Zones</h3>
+                    <p className="text-sm text-gray-600">
+                      {zones?.length || 0} explorable areas with unique missions and challenges
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <Target className="w-5 h-5 text-dream-primary" />
+                  <div>
+                    <h3 className="font-medium">Missions</h3>
+                    <p className="text-sm text-gray-600">
+                      {zones?.reduce((acc, zone) => acc + zone.missions.length, 0) || 0} restoration tasks
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Book className="w-5 h-5 text-dream-primary" />
+                  <div>
+                    <h3 className="font-medium">Skills</h3>
+                    <p className="text-sm text-gray-600">
+                      {skills?.length || 0} learnable abilities
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Tool className="w-5 h-5 text-dream-primary" />
+                  <div>
+                    <h3 className="font-medium">Tools</h3>
+                    <p className="text-sm text-gray-600">
+                      {tools?.length || 0} collectible items for restoration
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Bot className="w-5 h-5 text-dream-primary" />
+                  <div>
+                    <h3 className="font-medium">AI Nodes</h3>
+                    <p className="text-sm text-gray-600">
+                      {aiNodes?.length || 0} AI partners for guidance and training
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 text-2xl flex items-center justify-center">🌍</div>
+                  <div>
+                    <h3 className="font-medium">World Themes</h3>
+                    <p className="text-sm text-gray-600">
+                      {currentWorld?.worldPrompt.worldThemes.length || 0} guiding principles
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* World Preview */}
         <section className="bg-white rounded-2xl p-8 shadow-md">
