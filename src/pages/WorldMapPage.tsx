@@ -2,10 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Map as MapIcon } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
+import { usePlayerState } from '../hooks/usePlayerState';
 
 export default function WorldMapPage() {
   const navigate = useNavigate();
-  const { zones, currentGoal } = useGameData('goal11'); // TODO: Get from context/state
+  const { playerState } = usePlayerState();
+  const { zones, currentGoal } = useGameData(playerState.selectedGoalId || undefined);
 
   const handleZoneClick = (zoneId: string) => {
     navigate(`/zone/${zoneId}`);

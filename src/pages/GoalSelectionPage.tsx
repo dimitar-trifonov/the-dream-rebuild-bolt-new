@@ -2,13 +2,15 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Target } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
+import { usePlayerState } from '../hooks/usePlayerState';
 
 export default function GoalSelectionPage() {
   const navigate = useNavigate();
   const { goals } = useGameData();
+  const { actions } = usePlayerState();
 
   const handleSelectGoal = (goalId: string) => {
-    // In a real app, this would set the goal in PlayerProfile
+    actions.setGoal(goalId);
     navigate('/map');
   };
 

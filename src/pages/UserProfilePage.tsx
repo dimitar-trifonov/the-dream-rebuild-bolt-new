@@ -1,10 +1,11 @@
 import React from 'react';
 import { Book, Wrench, Bot, Sparkles } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
+import { usePlayerState } from '../hooks/usePlayerState';
 
 export default function UserProfilePage() {
-  const { skills, tools, aiNodes } = useGameData('goal11'); // TODO: Get from context/state
-  const currentHarmonyScore = 75; // TODO: Get from player state
+  const { playerState } = usePlayerState();
+  const { skills, tools, aiNodes } = useGameData(playerState.selectedGoalId || undefined);
 
   return (
     <div className="min-h-screen bg-dream-bg p-8 font-interface">
@@ -23,11 +24,11 @@ export default function UserProfilePage() {
           <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
             <div 
               className="absolute top-0 left-0 h-full bg-harmony-high rounded-full transition-all duration-500"
-              style={{ width: `${currentHarmonyScore}%` }}
+              style={{ width: `${playerState.currentHarmonyScore}%` }}
             />
           </div>
           <p className="mt-2 text-sm text-gray-600">
-            Current Harmony: {currentHarmonyScore}%
+            Current Harmony: {playerState.currentHarmonyScore}%
           </p>
         </section>
 
@@ -38,7 +39,7 @@ export default function UserProfilePage() {
             <h2 className="text-2xl font-interface">Learned Skills</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {skills?.map(skill => (
+            {skills?.filter(skill => playerState.learnedSkills.includes(skill.id)).map(skill => (
               <div key={skill.id} className="flex items-center gap-3 p-4 bg-dream-zone-bg rounded-lg">
                 <span className="text-2xl">{skill.icon}</span>
                 <span className="font-interface">{skill.name}</span>
@@ -54,7 +55,7 @@ export default function UserProfilePage() {
             <h2 className="text-2xl font-interface">Acquired Tools</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {tools?.map(tool => (
+            {tools?.filter(tool => playerState.acquiredTools.includes(tool.id)).map(tool => (
               <div key={tool.id} className="flex items-center gap-3 p-4 bg-dream-zone-bg rounded-lg">
                 <span className="text-2xl">{tool.icon}</span>
                 <span className="font-interface">{tool.name}</span>
@@ -70,7 +71,7 @@ export default function UserProfilePage() {
             <h2 className="text-2xl font-interface">AI Node Partners</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {aiNodes?.map(node => (
+            {aiNodes?.filter(node => playerState.inventoryNodes.includes(node.id)).map(node => (
               <div key={node.id} className="flex items-center gap-3 p-4 bg-dream-zone-bg rounded-lg">
                 <span className="text-2xl">{node.icon}</span>
                 <div>
