@@ -1,0 +1,104 @@
+# 📘 game-structure.rac.yaml
+
+dataStructure: GameConfig
+format: json
+root:
+  - goal: Goal
+  - world: World
+
+entities:
+  Goal:
+    id: string
+    title: string
+    description: string
+    themeColor: string
+    icon: string
+    worldPhilosophy: string
+    tone: string
+
+  World:
+    worldPrompt: WorldPrompt
+    skills: list[Skill]
+    tools: list[Tool]
+    aiNodes: list[AINode]
+    worldEvents: list[WorldEvent]
+    missions: list[Mission]
+    zones: list[Zone]
+    terrain: list[Terrain]
+
+  WorldPrompt:
+    worldThemes: list[string]
+    narrativeRules: list[string]
+    randomEventTypes: list[string]
+    resourceConstraints: list[string]
+    toneGuide: string
+
+  Skill:
+    id: string
+    name: string
+    canSelfTrain: bool
+    selfTrainingTime: string
+    aiSupport:
+      shortTermNode: string
+      masteryNode: string
+    icon: string
+
+  Tool:
+    id: string
+    name: string
+    requiredSkills: list[string]
+    icon: string
+
+  AINode:
+    id: string
+    name: string
+    icon: string
+    role: string
+    personality: string
+    supportType: string
+    training:
+      shortTerm: string
+      mastery: string
+    dataEngineeringTime: string
+
+  WorldEvent:
+    id: string
+    name: string
+    description: string
+    requiredSkills: list[string]
+    requiredTools: list[string]
+    timeToFix: string
+    eventTimeLimit: string
+    icon: string
+    harmonyReward: int
+
+  Mission:
+    id: string
+    name: string
+    goal: string
+    obstacles: string
+    approachRequiredSkills: list[string]
+    harmonyReward: int
+
+  Zone:
+    id: string
+    name: string
+    gridSize: list[int]
+    missions: list[string]
+    locations: list[Location]
+
+  Location:
+    id: string
+    coordinates: list[int]
+    items: list[Item]
+
+  Item:
+    type: string  # terrain, tools, worldEvents, aiNodes
+    id: string
+
+  Terrain:
+    id: string
+    terrainType: string
+    timeCost: int|null
+    icon: string
+

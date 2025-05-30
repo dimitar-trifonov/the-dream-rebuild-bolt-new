@@ -1,0 +1,20 @@
+# 📘 train-skill.rac.yaml
+
+event: TrainSkill
+trigger: "user clicks 'Train Skill' on tool hint or inventory"
+
+parameters:
+  - skillId: string
+  - method: enum(self, shortTerm, mastery)
+
+conditions:
+  - "skillId not in player.learnedSkills"
+  - "method == 'self' implies skill.canSelfTrain == true"
+  - "method in ['shortTerm', 'mastery'] implies required aiNode is in player.inventoryNodes"
+
+actions:
+  - "Add skillId to player.skillsInTraining"
+  - "Add trainingTime (based on method) to player.timeTracking.totalTime"
+  - "After training completes, move skillId to player.learnedSkills"
+  - "Remove from player.skillsInTraining"
+

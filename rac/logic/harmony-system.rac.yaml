@@ -1,0 +1,20 @@
+# 📘 harmony-system.rac.yaml
+
+logic: HarmonySystem
+
+description: >
+  Defines how Harmony is calculated from player actions and how it's visualized in the UI.
+
+rules:
+  - Each completed mission adds `mission.harmonyReward` to `player.currentHarmonyScore`
+  - Each resolved world event adds `worldEvent.harmonyReward` to the same
+  - Zones are marked as "Restored" when their mission and event are both complete
+
+formula:
+  currentHarmony = sum(harmonyReward from all completed missions and resolved events)
+  harmonyRatio = currentHarmony / totalHarmonyPossible
+
+successCondition:
+  - All zones restored AND
+  - currentHarmonyScore ≥ 500 (or goal-specific threshold)
+

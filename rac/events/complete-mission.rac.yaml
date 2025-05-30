@@ -1,0 +1,15 @@
+# 📘 complete-mission.rac.yaml
+
+event: CompleteMission
+trigger: "user completes mission resolution task"
+
+conditions:
+  - "mission.id in player.missionsInProgress"
+  - "mission.approachRequiredSkills ⊆ player.learnedSkills"
+
+actions:
+  - "Remove mission.id from player.missionsInProgress"
+  - "Add mission.id to player.missionsCompleted"
+  - "Add mission.harmonyReward to player.currentHarmonyScore"
+  - "Log CompleteMission to player action log"
+

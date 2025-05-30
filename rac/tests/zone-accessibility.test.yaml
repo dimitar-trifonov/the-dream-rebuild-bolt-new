@@ -1,0 +1,26 @@
+# 📘 zone-accessibility.test.yaml
+
+test: ZoneNavigation
+
+tests:
+  - name: "All locations have one terrain"
+    given:
+      zone:
+        locations:
+          - id: "loc1"
+            items:
+              - type: "terrain"
+                id: "ground"
+          - id: "loc2"
+            items: []
+    expect:
+      loc2.hasTerrain: false
+
+  - name: "Rock tiles block movement"
+    given:
+      terrain:
+        id: "rock"
+        timeCost: null
+    expect:
+      isPassable: false
+

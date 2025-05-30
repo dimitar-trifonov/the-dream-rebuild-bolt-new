@@ -1,0 +1,14 @@
+# 📘 collect-tool.rac.yaml
+
+event: CollectTool
+trigger: "user clicks 'Pick Me' on tool item"
+
+conditions:
+  - "tool.requiredSkills ⊆ player.learnedSkills"
+  - "player.currentLocation == tool.location"
+  - "tool.id not in player.acquiredTools"
+
+actions:
+  - "Add tool.id to player.acquiredTools"
+  - "Log CollectTool to player action log"
+

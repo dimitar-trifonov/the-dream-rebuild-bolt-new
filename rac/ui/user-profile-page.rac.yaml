@@ -1,0 +1,22 @@
+# 📘 user-profile-page.rac.yaml
+
+component: UserProfilePage
+visibleIf: "player.selectedGoal != null"
+
+elements:
+  - SkillInventory
+  - ToolInventory
+  - AINodeInventory
+  - HarmonySummary
+
+bindings:
+  SkillInventory:
+    value: player.learnedSkills
+  ToolInventory:
+    value: player.acquiredTools
+  AINodeInventory:
+    value: player.inventoryNodes
+  HarmonySummary:
+    value: player.currentHarmonyScore
+    hint: "Progress toward global restoration goal"
+

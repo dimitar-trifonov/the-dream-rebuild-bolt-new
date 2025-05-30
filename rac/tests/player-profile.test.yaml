@@ -1,0 +1,25 @@
+# 📘 player-profile.test.yaml
+
+test: PlayerProfile
+
+tests:
+  - name: "Can start mission if skill is available"
+    given:
+      player:
+        learnedSkills: ["skill1"]
+        missionsInProgress: []
+      mission:
+        id: "mission1"
+        approachRequiredSkills: ["skill1"]
+    expect:
+      canStartMission: true
+
+  - name: "Cannot collect tool without skill"
+    given:
+      player:
+        learnedSkills: []
+      tool:
+        requiredSkills: ["skill2"]
+    expect:
+      canCollectTool: false
+

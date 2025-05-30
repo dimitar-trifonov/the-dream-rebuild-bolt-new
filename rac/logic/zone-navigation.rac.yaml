@@ -1,0 +1,61 @@
+# 📘 zone-navigation.rac.yaml
+
+logic: ZoneNavigation
+
+description: >
+  Defines valid movement rules and controls for navigating a zone grid in The Dream game.
+  Movement is restricted to cardinal directions and depends on terrain passability.
+
+controls:
+  inputMethods:
+    - type: "keyboard"
+      keys: ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]
+      description: "Move one tile in the specified direction."
+    - type: "mouse"
+      action: "click"
+      condition: "Click on adjacent passable tile"
+      description: "Move to a neighboring tile by clicking it."
+
+rules:
+  movementDirections:
+    - north
+    - south
+    - east
+    - west
+
+  passableTerrain:
+    condition: "tile.terrain.timeCost != null"
+    description: "Only terrain with a timeCost is considered passable."
+
+  movementCost:
+    formula: "player.time += tile.terrain.timeCost"
+    description: "Each movement adds the terrain's time cost to the player's total time."
+
+  tileConstraints:
+    - mustContain: "terrain"
+    - onlyOneItem: true
+    - impassableIf: "terrain.timeCost == null"
+
+ui:
+  highlightAdjacentPassableTiles: true
+  showMovementCostPreviewOnHover: true
+  disableClickIfTileBlocked: true
+
+tests:
+  - name: "Can move to adjacent ground tile"
+    given:
+      currentTile: [2, 2]
+      targetTile: [2, 3]
+      terrain: { type: "ground", timeCost: 2 }
+    expect:
+      movementAllowed: true
+      timeAdded: 2
+
+  - name: "Cannot move to rock tile"
+    given:
+      currentTile: [1, 1]
+      targetTile: [1, 2]
+      terrain: { type: "rock", timeCost: null }
+    expect:
+      movementAllowed: false
+

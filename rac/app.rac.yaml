@@ -1,0 +1,113 @@
+# 📘 app.rac.yaml
+
+app:
+  name: "The Dream"
+  description: >
+    A meditative narrative game where players choose a life goal, explore damaged zones,
+    train skills, and partner with AI Nodes to restore harmony to the world.
+  entryPage: "/"
+  routes:
+    - path: "/"
+      component: "home-page"
+    - path: "/choose-goal"
+      component: "goal-selection"
+    - path: "/map"
+      component: "world-map"
+    - path: "/zone/:id"
+      component: "zone-view"
+    - path: "/mission/:id"
+      component: "mission-detail"
+    - path: "/inventory"
+      component: "user-profile-page"
+    - path: "/design"
+      component: "design-system-page"
+    - path: "/config"
+      component: "config-page"
+  state:
+    - "player-profile"
+    - "world-state"
+  logic:
+    - "zone-navigation"
+    - "time-model"
+    - "harmony-system"
+  events:
+    - "fix-world-event"
+    - "collect-tool"
+    - "train-skill"
+    - "activate-ai-node"
+    - "complete-mission"
+  tests:
+    - "player-profile.test"
+    - "zone-accessibility.test"
+    - "time-balance.test"
+  css:
+    - "design-system"
+    - "animations"
+  data:
+    - "game-structure"
+    - "example-world-config"
+  content:
+    - "about"
+    - "world-prompts"
+    
+# 📘 app.rac.yaml
+
+app:
+  name: "The Dream"
+  description: >
+    A meditative narrative game where players choose a life goal, explore damaged zones,
+    train skills, and partner with AI Nodes to restore harmony to the world.
+  entryPage: "/"
+
+  routes:
+    - path: "/"
+      component: "home-page"
+    - path: "/choose-goal"
+      component: "goal-selection"
+    - path: "/map"
+      component: "world-map"
+    - path: "/zone/:id"
+      component: "zone-view"
+    - path: "/mission/:id"
+      component: "mission-detail"
+    - path: "/inventory"
+      component: "user-profile-page"
+    - path: "/design"
+      component: "design-system-page"
+    - path: "/config"
+      component: "config-page"
+
+  state:
+    - "player-profile"
+    - "world-state"
+
+  events:
+    - "fix-world-event"
+    - "collect-tool"
+    - "train-skill"
+    - "activate-ai-node"
+    - "complete-mission"
+    - "start-new-game"
+
+  logic:
+    - "zone-navigation"
+    - "time-model"
+    - "harmony-system"
+
+  data:
+    - "game-structure"
+    - "example-world-config"
+
+  css:
+    - "design-system"
+    - "animations"
+
+  content:
+    - "about"
+    - "world-prompts"
+
+  tests:
+    - "harmony-system.test"
+    - "zone-accessibility.test"
+    - "player-profile.test"
+

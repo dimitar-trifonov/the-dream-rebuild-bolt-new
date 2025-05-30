@@ -1,0 +1,16 @@
+# 📘 goal-selection.rac.yaml
+
+component: GoalSelectionPage
+visibleIf: "player.selectedGoal == null"
+
+onSelect:
+  event: "SetGoal"
+  input:
+    - goalId: string
+
+actions:
+  - "Set player.selectedGoal = goalId"
+  - "Load world data for selected goal"
+  - "Set availableMissions from world.missions"
+  - "Redirect to /map"
+

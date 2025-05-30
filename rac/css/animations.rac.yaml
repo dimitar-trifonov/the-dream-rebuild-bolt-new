@@ -1,0 +1,20 @@
+# 📘 animations.rac.yaml
+
+cssAnimations:
+  animate-growth:
+    description: "Used for confirming actions or new content"
+    style: "transition-transform scale-105 duration-300 ease-out"
+
+  animate-sway:
+    description: "Subtle world ambience, e.g. trees or icons gently moving"
+    style: "animate-[sway_3s_ease-in-out_infinite]"
+
+  animate-pulse-subtle:
+    description: "Passive UI feedback (e.g. AI node available)"
+    style: "animate-pulse opacity-80 duration-1000"
+
+usage:
+  button.click: "animate-growth"
+  ai-node-idle: "animate-pulse-subtle"
+  world-map-icons: "animate-sway"
+

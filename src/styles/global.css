@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utilities and components go here */
+
+@layer base {
+  :root {
+    --dream-bg: 0 0% 98%;
+    --dream-zone-bg: 0 0% 100%;
+    --dream-primary: 144 61% 53%;
+    --dream-primary-hover: 144 61% 48%;
+    --dream-secondary: 24 15% 85%;
+    --dream-contrast: 15 95% 65%;
+    --harmony-high: 144 70% 45%;
+    --harmony-mid: 24 25% 65%;
+    --harmony-low: 15 35% 85%;
+  }
+
+  @font-face {
+    font-family: 'Interface';
+    src: url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&display=swap');
+  }
+
+  @font-face {
+    font-family: 'Narrative';
+    src: url('https://fonts.googleapis.com/css2?family=Garamond:wght@400;600&display=swap');
+  }
+}

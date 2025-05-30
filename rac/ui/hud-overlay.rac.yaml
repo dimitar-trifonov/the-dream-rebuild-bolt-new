@@ -1,0 +1,22 @@
+# 📘 hud-overlay.rac.yaml
+
+component: HUDOverlay
+visibleAlways: true
+
+elements:
+  - HarmonyScoreMeter
+  - ActiveGoalIndicator
+  - CurrentZoneName
+  - LocationCoordinates
+  - TimeUsedDisplay
+
+bindings:
+  HarmonyScoreMeter:
+    value: "player.currentHarmonyScore / world.totalHarmonyPossible"
+  ActiveGoalIndicator:
+    value: "player.selectedGoal"
+  LocationCoordinates:
+    value: "player.currentLocation"
+  TimeUsedDisplay:
+    value: "player.timeTracking.totalTime"
+

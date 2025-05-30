@@ -1,0 +1,29 @@
+# 📘 config-page.rac.yaml
+
+component: ConfigPage
+visibleAlways: true
+
+elements:
+  - ConfigViewer
+  - GoalSelector
+  - WorldPromptPreview
+  - ResetGameButton
+
+bindings:
+  ConfigViewer:
+    source: /data/game-config.json
+    format: treeView
+  GoalSelector:
+    options: "from game-config goals"
+    onSelect:
+      event: "SetGoal"
+      actions:
+        - "Set selectedGoal in PlayerProfile"
+        - "Reload world structure"
+  ResetGameButton:
+    onClick:
+      event: "ResetGame"
+      actions:
+        - "Clear PlayerProfile and WorldState"
+        - "Redirect to /choose-goal"
+

@@ -1,0 +1,22 @@
+# 📘 about.rac.yaml
+
+content: AboutTheDream
+
+sections:
+  - title: "The Game"
+    body: >
+      The Dream is a narrative restoration game where players partner with AI Nodes to heal a broken world.
+      Through exploration, skill development, and intentional choices, players regenerate damaged ecosystems
+      and rebuild trust in human-AI collaboration.
+
+  - title: "Gameplay"
+    body: >
+      Players select a life goal, navigate zones, collect tools, train skills, and resolve events. Every completed
+      mission contributes Harmony points toward the global healing effort. Zones evolve visually from Damaged
+      → Healing → Restored, showing the player's impact.
+
+  - title: "Philosophy"
+    body: >
+      The Dream is a metaphor for growth. It teaches patience, intentionality, and the power of supportive systems
+      — including AI — when designed with empathy and care.
+

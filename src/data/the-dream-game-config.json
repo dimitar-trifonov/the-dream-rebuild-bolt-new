@@ -1,0 +1,263 @@
+[
+  {
+    "goal": {
+      "id": "goal11",
+      "title": "Restore Nature",
+      "description": "Heal the land, regenerate ecosystems, and repair broken environmental systems with respect and care.",
+      "themeColor": "bg-dream-primary",
+      "icon": "🌿",
+      "worldPhilosophy": "Nature will return if given space, intention, and balance. Healing begins in the roots.",
+      "tone": "Gentle, meditative, hopeful. Emphasis on subtlety and humility."
+    },
+    "world": {
+      "worldPrompt": {
+        "worldThemes": ["ecological restoration", "techno-organic balance", "reverence for life"],
+        "narrativeRules": ["No violent solutions", "Avoid overreliance on technology", "Encourage symbiosis with nature"],
+        "randomEventTypes": ["Sudden bloom", "Soil collapse", "Tech relic emergence"],
+        "resourceConstraints": ["Water scarcity in south zones", "No salvage in sacred forests"],
+        "toneGuide": "Gentle, emotionally rich, emphasizing hope and responsibility"
+      },
+      "skills": [
+        {
+          "id": "skill11",
+          "name": "Botanical Mapping",
+          "aiSupport": { "shortTermNode": "node11", "masteryNode": "node11" },
+          "canSelfTrain": true,
+          "selfTrainingTime": "6h",
+          "icon": "🍁"
+        },
+        {
+          "id": "skill12",
+          "name": "Soil Restoration",
+          "aiSupport": { "shortTermNode": "node11", "masteryNode": "node11" },
+          "canSelfTrain": true,
+          "selfTrainingTime": "9h",
+          "icon": "🌱"
+        }
+      ],
+      "tools": [
+        {
+          "id": "tool11",
+          "name": "Soil Harmonizer",
+          "requiredSkills": ["skill11"],
+          "icon": "🪛"
+        },
+        {
+          "id": "tool12",
+          "name": "Seed Infuser",
+          "requiredSkills": ["skill12"],
+          "icon": "🌾"
+        }
+      ],
+      "aiNodes": [
+        {
+          "id": "node11",
+          "name": "Cedar",
+          "icon": "🤖",
+          "role": "Restoration Guide",
+          "personality": "Patient, earthy, poetic",
+          "supportType": "Skill practice and reflection prompts",
+          "training": { "shortTerm": "2h", "mastery": "3d" }
+        }
+      ],
+      "worldEvents": [
+        {
+          "id": "event11",
+          "name": "Encroaching Kudzu",
+          "description": "A non-native vine has taken over a pollinator grove.",
+          "icon": "🌿",
+          "requiredSkills": ["skill11"],
+          "requiredTools": ["tool11"],
+          "timeToFix": "12h",
+          "eventTimeLimit": "48h",
+          "harmonyReward": 15
+        }
+      ],
+      "missions": [
+        {
+          "id": "mission11",
+          "name": "Reclaim the Grove",
+          "goal": "Free native trees from invasive overgrowth",
+          "obstacles": "Dense underbrush, aggressive vines",
+          "approachRequiredSkills": ["skill12"],
+          "harmonyReward": 15
+        }
+      ],
+      "terrain": [
+        { "id": "ground", "terrainType": "ground", "timeCost": 2, "icon": "🌱" },
+        { "id": "sand", "terrainType": "sand", "timeCost": 3, "icon": "🏖️" },
+        { "id": "pave", "terrainType": "pave", "timeCost": 1, "icon": "🧱" },
+        { "id": "rock", "terrainType": "rock", "timeCost": null, "icon": "🪨" }
+      ],
+      "zones": [
+        {
+          "id": "zone11",
+          "name": "Verdant Hollow",
+          "gridSize": [5, 5],
+          "missions": ["mission11"],
+          "locations": [
+            { "id": "loc1", "coordinates": [0, 0], "items": [ { "type": "terrain", "id": "ground" }, { "type": "start" } ] },
+            { "id": "loc2", "coordinates": [1, 0], "items": [ { "type": "terrain", "id": "pave" } ] },
+            { "id": "loc3", "coordinates": [2, 0], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc4", "coordinates": [3, 0], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc5", "coordinates": [4, 0], "items": [ { "type": "terrain", "id": "sand" } ] },
+
+            { "id": "loc6", "coordinates": [0, 1], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc7", "coordinates": [1, 1], "items": [ { "type": "terrain", "id": "pave" }, { "type": "tools", "id": "tool11" } ] },
+            { "id": "loc8", "coordinates": [2, 1], "items": [ { "type": "terrain", "id": "pave" } ] },
+            { "id": "loc9", "coordinates": [3, 1], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc10", "coordinates": [4, 1], "items": [ { "type": "terrain", "id": "rock" } ] },
+
+            { "id": "loc11", "coordinates": [0, 2], "items": [ { "type": "terrain", "id": "sand" } ] },
+            { "id": "loc12", "coordinates": [1, 2], "items": [ { "type": "terrain", "id": "ground" }, { "type": "aiNodes", "id": "node11" } ] },
+            { "id": "loc13", "coordinates": [2, 2], "items": [ { "type": "terrain", "id": "rock" } ] },
+            { "id": "loc14", "coordinates": [3, 2], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc15", "coordinates": [4, 2], "items": [ { "type": "terrain", "id": "sand" } ] },
+
+            { "id": "loc16", "coordinates": [0, 3], "items": [ { "type": "terrain", "id": "pave" } ] },
+            { "id": "loc17", "coordinates": [1, 3], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc18", "coordinates": [2, 3], "items": [ { "type": "terrain", "id": "ground" }, { "type": "worldEvents", "id": "event11" } ] },
+            { "id": "loc19", "coordinates": [3, 3], "items": [ { "type": "terrain", "id": "sand" } ] },
+            { "id": "loc20", "coordinates": [4, 3], "items": [ { "type": "terrain", "id": "pave" } ] },
+
+            { "id": "loc21", "coordinates": [0, 4], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc22", "coordinates": [1, 4], "items": [ { "type": "terrain", "id": "pave" }, { "type": "tools", "id": "tool12" } ] },
+            { "id": "loc23", "coordinates": [2, 4], "items": [ { "type": "terrain", "id": "rock" } ] },
+            { "id": "loc24", "coordinates": [3, 4], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc25", "coordinates": [4, 4], "items": [ { "type": "terrain", "id": "sand" } ] }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "goal": {
+      "id": "goal21",
+      "title": "Mend the Signal",
+      "description": "Reconnect lost communication across broken lands to rediscover stories, truths, and trust.",
+      "themeColor": "bg-dream-primary",
+      "icon": "📡",
+      "worldPhilosophy": "Communication is a form of care. When we listen and share with intention, we rebuild what was broken.",
+      "tone": "Gentle, meditative, hopeful. From static to signal, from silence to understanding."
+    },
+    "world": {
+      "worldPrompt": {
+        "worldThemes": ["restoring communication", "emotional resonance", "hidden networks"],
+        "narrativeRules": ["No violent solutions", "Honor forgotten stories", "Balance tech and empathy"],
+        "randomEventTypes": ["Signal flare", "Lost message", "Echo anomaly"],
+        "resourceConstraints": ["Power scarcity in valleys", "No tech salvage in echo zones"],
+        "toneGuide": "Grief dissolves into connection. Every message mended is a bond restored."
+      },
+      "skills": [
+        {
+          "id": "skill21",
+          "name": "Signal Mapping",
+          "aiSupport": { "shortTermNode": "node21", "masteryNode": "node22" },
+          "canSelfTrain": true,
+          "selfTrainingTime": "7h",
+          "icon": "🛰"
+        },
+        {
+          "id": "skill22",
+          "name": "Empathic Listening",
+          "aiSupport": { "shortTermNode": "node21", "masteryNode": "node22" },
+          "canSelfTrain": true,
+          "selfTrainingTime": "6h",
+          "icon": "👂"
+        }
+      ],
+      "tools": [
+        {
+          "id": "tool21",
+          "name": "Resonance Tuner",
+          "requiredSkills": ["skill21"],
+          "icon": "📻"
+        },
+        {
+          "id": "tool22",
+          "name": "Story Harvester",
+          "requiredSkills": ["skill22"],
+          "icon": "📖"
+        }
+      ],
+      "aiNodes": [
+        {
+          "id": "node21",
+          "name": "Echo",
+          "icon": "🤖",
+          "role": "Signal Analyst",
+          "personality": "Precise, curious, observant",
+          "supportType": "Decoding patterns and boosting clarity",
+          "training": { "shortTerm": "2h", "mastery": "3d" }
+        },
+        {
+          "id": "node22",
+          "name": "Lyra",
+          "icon": "💫",
+          "role": "Narrative Mentor",
+          "personality": "Warm, reflective, intuitive",
+          "supportType": "Emotionally rich insight and interpretation",
+          "training": { "shortTerm": "3h", "mastery": "4d" }
+        }
+      ],
+      "worldEvents": [
+        {
+          "id": "event21",
+          "name": "Broken Relay",
+          "description": "A vital signal relay lies dormant, silencing nearby zones.",
+          "icon": "📡",
+          "requiredSkills": ["skill21"],
+          "requiredTools": ["tool21"],
+          "timeToFix": "12h",
+          "eventTimeLimit": "48h",
+          "harmonyReward": 20
+        }
+      ],
+      "missions": [
+        {
+          "id": "mission21",
+          "name": "Signal Rebirth",
+          "goal": "Reconnect the broken relay and record the recovered stories",
+          "obstacles": "Scrambled echoes, blocked access paths",
+          "approachRequiredSkills": ["skill22"],
+          "harmonyReward": 20
+        }
+      ],
+      "terrain": [
+        { "id": "ground", "terrainType": "ground", "timeCost": 2, "icon": "🌱" },
+        { "id": "sand", "terrainType": "sand", "timeCost": 3, "icon": "🏖️" },
+        { "id": "pave", "terrainType": "pave", "timeCost": 1, "icon": "🧱" },
+        { "id": "rock", "terrainType": "rock", "timeCost": null, "icon": "🪨" }
+      ],
+      "zones": [
+        {
+          "id": "zone1",
+          "name": "Echo Vale",
+          "gridSize": [4, 4],
+          "missions": ["mission21"],
+          "locations": [
+            { "id": "loc1", "coordinates": [0, 0], "items": [ { "type": "terrain", "id": "ground" }, { "type": "start" } ] },
+            { "id": "loc2", "coordinates": [1, 0], "items": [ { "type": "terrain", "id": "pave" } ] },
+            { "id": "loc3", "coordinates": [2, 0], "items": [ { "type": "terrain", "id": "rock" } ] },
+            { "id": "loc4", "coordinates": [3, 0], "items": [ { "type": "terrain", "id": "ground" } ] },
+
+            { "id": "loc5", "coordinates": [0, 1], "items": [ { "type": "terrain", "id": "sand" } ] },
+            { "id": "loc6", "coordinates": [1, 1], "items": [ { "type": "terrain", "id": "ground" }, { "type": "tools", "id": "tool21" } ] },
+            { "id": "loc7", "coordinates": [2, 1], "items": [ { "type": "terrain", "id": "ground" } ] },
+            { "id": "loc8", "coordinates": [3, 1], "items": [ { "type": "terrain", "id": "rock" } ] },
+
+            { "id": "loc9", "coordinates": [0, 2], "items": [ { "type": "terrain", "id": "ground" }, { "type": "aiNodes", "id": "node21" } ] },
+            { "id": "loc10", "coordinates": [1, 2], "items": [ { "type": "terrain", "id": "sand" } ] },
+            { "id": "loc11", "coordinates": [2, 2], "items": [ { "type": "terrain", "id": "ground" }, { "type": "worldEvents", "id": "event21" } ] },
+            { "id": "loc12", "coordinates": [3, 2], "items": [ { "type": "terrain", "id": "pave" } ] },
+
+            { "id": "loc13", "coordinates": [0, 3], "items": [ { "type": "terrain", "id": "sand" } ] },
+            { "id": "loc14", "coordinates": [1, 3], "items": [ { "type": "terrain", "id": "ground" }, { "type": "tools", "id": "tool22" } ] },
+            { "id": "loc15", "coordinates": [2, 3], "items": [ { "type": "terrain", "id": "pave" } ] },
+            { "id": "loc16", "coordinates": [3, 3], "items": [ { "type": "terrain", "id": "ground" }, { "type": "aiNodes", "id": "node22" } ] }
+          ]
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,23 @@
+# 📘 world-prompts.rac.yaml
+
+content: WorldPromptCatalog
+
+entries:
+  - goalId: "goal1"
+    title: "Restore Nature"
+    worldPrompt:
+      worldThemes: ["ecological restoration", "techno-organic balance", "reverence for life"]
+      narrativeRules: ["No violent solutions", "Avoid overreliance on technology", "Encourage symbiosis"]
+      randomEventTypes: ["Sudden bloom", "Soil collapse", "Tech relic emergence"]
+      resourceConstraints: ["Water scarcity in south zones", "No salvage in sacred forests"]
+      toneGuide: "Gentle, emotionally rich, emphasizing hope and responsibility"
+
+  - goalId: "goal2"
+    title: "Rebuild Community Trust"
+    worldPrompt:
+      worldThemes: ["emotional restoration", "rituals of reconciliation", "shared vulnerability"]
+      narrativeRules: ["Never punish failure", "Celebrate micro-repair", "Dialogue over judgment"]
+      randomEventTypes: ["Unspoken grievance", "Miscommunication", "Trust breach"]
+      resourceConstraints: ["Fragmented memory zones", "No enforced confessions"]
+      toneGuide: "Warm, reflective, human-first"
+

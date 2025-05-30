@@ -1,0 +1,32 @@
+# 📘 harmony-system.test.yaml
+
+test: HarmonySystem
+
+tests:
+  - name: "Harmony increases after mission and event"
+    given:
+      player:
+        missionsCompleted: ["mission1"]
+        currentHarmonyScore: 0
+      world:
+        missions:
+          - id: "mission1"
+            harmonyReward: 10
+        worldEvents:
+          - id: "event1"
+            harmonyReward: 15
+            status: "resolved"
+    expect:
+      player.currentHarmonyScore: 25
+
+  - name: "Victory condition met"
+    given:
+      player:
+        currentHarmonyScore: 500
+      world:
+        zoneStatus:
+          zone1: "Restored"
+          zone2: "Restored"
+    expect:
+      gameVictory: true
+

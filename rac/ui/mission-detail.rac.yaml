@@ -1,0 +1,27 @@
+# 📘 mission-detail.rac.yaml
+
+component: MissionDetail
+visibleIf: "mission.id == routeParams.missionId"
+
+elements:
+  - requiredSkills
+  - requiredTools
+  - StartMissionButton
+  - FixEventButton
+  - AIHelpHint
+
+bindings:
+  FixEventButton:
+    visibleIf: "canFix(worldEvent)"
+    onClick: FixWorldEvent
+
+  StartMissionButton:
+    visibleIf: "mission.id not in player.missionsInProgress"
+    onClick:
+      event: "StartMission"
+      input:
+        - missionId: string
+
+actions:
+  - "Add missionId to player.missionsInProgress"
+

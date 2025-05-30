@@ -1,0 +1,17 @@
+# 📘 world-map.rac.yaml
+
+component: WorldMap
+visibleIf: "player.selectedGoal != null"
+
+elements:
+  - zoneCards: "Display all zones in world"
+
+onClick:
+  zoneCard:
+    event: "NavigateToZone"
+    input:
+      - zoneId: string
+
+actions:
+  - "Navigate to /zone/:zoneId"
+

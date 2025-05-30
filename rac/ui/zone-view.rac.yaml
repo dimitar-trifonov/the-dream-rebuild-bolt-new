@@ -1,0 +1,22 @@
+# 📘 zone-view.rac.yaml
+
+component: ZoneView
+visibleIf: "zoneId in world.zones"
+
+elements:
+  - locationGrid: "Render zone grid with terrain and items"
+  - missionList: "Show related missions in this zone"
+  - aiNodeCards: "Show available AI Nodes in this zone"
+  - toolCards: "Show tools in zone locations"
+  - eventCards: "Show unresolved events"
+
+onClick:
+  missionCard:
+    event: "NavigateToMission"
+    input:
+      - missionId: string
+  location:
+    event: "MoveToLocation"
+    input:
+      - coordinates: [x: int, y: int]
+

@@ -1,0 +1,24 @@
+# 📘 player-profile.rac.yaml
+
+entity: PlayerProfile
+fields:
+  id: string
+  name: string
+  selectedGoal: string
+  currentHarmonyScore: int
+  learnedSkills: list[string]
+  skillsInTraining: list[string]
+  acquiredTools: list[string]
+  inventoryNodes: list[string]
+  missionsCompleted: list[string]
+  missionsInProgress: list[string]
+  worldZonesRestored: list[string]
+  currentMissionId: string
+  availableMissions: list[string]
+  currentLocation: map{x: int, y: int}
+  lastActiveTimestamp: string
+  timeTracking:
+    totalTime: int
+    currentEventTimeLimit: int
+    lastUpdateTimestamp: string
+

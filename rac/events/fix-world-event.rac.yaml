@@ -1,0 +1,18 @@
+# 📘 fix-world-event.rac.yaml
+
+event: FixWorldEvent
+trigger: "user clicks Fix button on mission page"
+
+conditions:
+  - "player has all requiredSkills from worldEvent.requiredSkills"
+  - "player has all requiredTools from worldEvent.requiredTools"
+  - "player.currentLocation == worldEvent.location"
+  - "TotalTime(prep + fix) ≤ worldEvent.eventTimeLimit"
+
+actions:
+  - "Set worldEvent.status = 'resolved'"
+  - "Add worldEvent.harmonyReward to player.currentHarmonyScore"
+  - "Append worldEvent.id to worldState.eventsResolved"
+  - "Log FixWorldEvent to player action log"
+  - "Update zone status if all events are resolved"
+

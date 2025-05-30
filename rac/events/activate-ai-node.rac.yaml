@@ -1,0 +1,14 @@
+# 📘 activate-ai-node.rac.yaml
+
+event: ActivateAINode
+trigger: "user clicks on AI Node in zone"
+
+conditions:
+  - "aiNode.id not in player.inventoryNodes"
+  - "player.currentLocation == aiNode.location"
+
+actions:
+  - "Add aiNode.id to player.inventoryNodes"
+  - "Add aiNode.dataEngineeringTime to player.timeTracking.totalTime"
+  - "Log ActivateAINode to player action log"
+

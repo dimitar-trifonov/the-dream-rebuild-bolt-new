@@ -1,0 +1,23 @@
+# 📘 design-system-page.rac.yaml
+
+component: DesignSystemPage
+visibleAlways: true
+
+elements:
+  - TypographySamples
+  - ColorSwatches
+  - ButtonVariants
+  - CardLayouts
+  - OverlayPreview
+
+bindings:
+  TypographySamples:
+    render: ["title", "header", "body", "small"]
+    source: /rac/css/design-system.rac.yaml
+  ColorSwatches:
+    showTokens: ["bg-dream-*", "bg-harmony-*"]
+  ButtonVariants:
+    showPresets: ["primaryButton", "secondaryButton"]
+  CardLayouts:
+    layoutExamples: ["ZoneCard", "MissionCard"]
+

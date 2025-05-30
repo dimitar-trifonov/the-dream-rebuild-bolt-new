@@ -1,0 +1,35 @@
+# 📘 time-model.rac.yaml
+
+logic: TimeModel
+
+description: >
+  Defines how total gameplay time is calculated, including navigation, skill training,
+  AI Node activation, and world event resolution.
+
+formulas:
+  PreparationTime:
+    components:
+      - NavigationTime
+      - AITrainingTime
+      - SkillTrainingTime
+
+  NavigationTime:
+    formula: "sum(tile.timeCost for each move)"
+    condition: "only passable terrain"
+
+  SkillTrainingTime:
+    choices:
+      - selfTrainingTime if skill.canSelfTrain
+      - aiNode.training.shortTerm
+      - aiNode.training.mastery
+    note: "Skill can only be trained one way per session"
+
+  AITrainingTime:
+    formula: "sum(aiNode.dataEngineeringTime for each activated node)"
+
+  TotalTime:
+    formula: "PreparationTime + worldEvent.timeToFix"
+
+successCondition:
+  formula: "TotalTime ≤ worldEvent.eventTimeLimit"
+

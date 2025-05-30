@@ -1,0 +1,36 @@
+# 📘 home-page.rac.yaml
+
+component: HomePage
+visibleAlways: true
+
+elements:
+  - IntroSection
+  - StartGameButton
+  - DesignLink
+  - ConfigLink
+  - InventoryLink
+
+bindings:
+  IntroSection:
+    source: /rac/content/about.rac.yaml
+    renderSections:
+      - title: "The Game"
+      - title: "Gameplay"
+      - title: "Philosophy"
+  StartGameButton:
+    label: "Start New Game"
+    onClick:
+      event: "StartNewGame"
+      actions:
+        - "Clear PlayerProfile"
+        - "Redirect to /choose-goal"
+  DesignLink:
+    label: "Design System"
+    href: "/design"
+  ConfigLink:
+    label: "Game Config"
+    href: "/config"
+  InventoryLink:
+    label: "My Profile"
+    href: "/inventory"
+

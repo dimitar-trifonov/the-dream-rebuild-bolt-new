@@ -1,0 +1,65 @@
+# 📘 design-system.rac.yaml
+
+cssSystem: DreamTheme
+
+sourceOfTruth:
+  tailwindConfig: "tailwind.config.js"
+  customCSS:
+    - "src/styles/theme.css"
+    - "src/styles/components.css"
+
+note: >
+  These RaC tokens mirror real classes defined in your Tailwind + CSS theme setup.
+  Use this file to instruct LLMs or tools like Bolt.new on how to generate consistent UI.
+
+aliases:
+  colors:
+    background: "bg-dream-bg"
+    zoneCard: "bg-dream-zone-bg"
+    primaryButton: "bg-dream-primary"
+    secondaryButton: "bg-dream-secondary"
+    alert: "bg-dream-contrast"
+    harmonyHigh: "bg-harmony-high"
+    harmonyMid: "bg-harmony-mid"
+    harmonyLow: "bg-harmony-low"
+
+  typography:
+    title: "text-4xl font-narrative"
+    header: "text-2xl font-interface"
+    body: "text-base font-interface"
+    small: "text-sm"
+
+  componentPresets:
+    card: "bg-dream-zone-bg p-4 rounded-2xl shadow-md"
+    button: "bg-dream-primary hover:bg-dream-primary-hover text-white px-4 py-2 rounded-lg transition"
+    overlay: "bg-white bg-opacity-80 backdrop-blur-md shadow-lg p-4 rounded-xl"
+
+  animationPresets:
+    growth: "transition-transform scale-105 duration-300 ease-out"
+    pulseSubtle: "animate-pulse opacity-80 duration-1000"
+    sway: "animate-[sway_3s_ease-in-out_infinite]"
+
+usage:
+  previewPage: DesignSystemPage
+  sections:
+    - Typography
+    - Buttons (primary, secondary)
+    - Card example using `componentPresets.card`
+    - Overlay example using `componentPresets.overlay`
+    - Animation demo using `animationPresets.pulseSubtle` on button
+
+implementationGuidelines:
+  - CSS variables must be defined before Tailwind processes them.
+  - Use HSL format in variable values (e.g., `--leaf-500: 144 61% 53%`) — do **not** wrap them in `hsl()`.
+  - In Tailwind config, use `hsl(var(--color) / <alpha-value>)` to enable opacity utilities like `/80`.
+  - Safelist any dynamically generated color classes in Tailwind config or use full static class names (e.g., `bg-dream-primary/80`).
+  - Maintain this CSS import order: 
+      1. `@tailwind base`
+      2. `@tailwind components`
+      3. `@tailwind utilities`
+      4. custom `@layer base`, `@layer utilities`
+  - Ensure that `theme.css` is explicitly imported in your app's entry point (e.g., `main.tsx`, `App.tsx`, or `_app.tsx`) to activate the design system.
+  - Tailwind’s JIT engine only compiles classes it finds in listed `content` paths — dynamic strings won’t be detected.
+  - Restart the build process (`vite`, `next dev`, etc.) after editing `tailwind.config.js` or `theme.css`.
+  - Use hard reload in browser or clear cache to ensure latest CSS is applied.
+
