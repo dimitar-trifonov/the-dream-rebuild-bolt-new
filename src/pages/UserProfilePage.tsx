@@ -1,23 +1,11 @@
 import React from 'react';
 import { Book, Wrench, Bot, Sparkles } from 'lucide-react';
-
-// Mock data - in a real app, this would come from your game state
-const playerProfile = {
-  learnedSkills: [
-    { id: 'skill1', name: 'Botanical Mapping', icon: '🍁' },
-    { id: 'skill2', name: 'Soil Restoration', icon: '🌱' }
-  ],
-  acquiredTools: [
-    { id: 'tool1', name: 'Soil Harmonizer', icon: '🪛' },
-    { id: 'tool2', name: 'Seed Infuser', icon: '🌾' }
-  ],
-  inventoryNodes: [
-    { id: 'node1', name: 'Cedar', role: 'Restoration Guide', icon: '🤖' }
-  ],
-  currentHarmonyScore: 75
-};
+import { useGameData } from '../hooks/useGameData';
 
 export default function UserProfilePage() {
+  const { skills, tools, aiNodes } = useGameData('goal11'); // TODO: Get from context/state
+  const currentHarmonyScore = 75; // TODO: Get from player state
+
   return (
     <div className="min-h-screen bg-dream-bg p-8 font-interface">
       <header className="max-w-5xl mx-auto mb-12">
@@ -35,11 +23,11 @@ export default function UserProfilePage() {
           <div className="relative h-4 bg-gray-100 rounded-full overflow-hidden">
             <div 
               className="absolute top-0 left-0 h-full bg-harmony-high rounded-full transition-all duration-500"
-              style={{ width: `${playerProfile.currentHarmonyScore}%` }}
+              style={{ width: `${currentHarmonyScore}%` }}
             />
           </div>
           <p className="mt-2 text-sm text-gray-600">
-            Current Harmony: {playerProfile.currentHarmonyScore}%
+            Current Harmony: {currentHarmonyScore}%
           </p>
         </section>
 
@@ -50,7 +38,7 @@ export default function UserProfilePage() {
             <h2 className="text-2xl font-interface">Learned Skills</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {playerProfile.learnedSkills.map(skill => (
+            {skills?.map(skill => (
               <div key={skill.id} className="flex items-center gap-3 p-4 bg-dream-zone-bg rounded-lg">
                 <span className="text-2xl">{skill.icon}</span>
                 <span className="font-interface">{skill.name}</span>
@@ -66,7 +54,7 @@ export default function UserProfilePage() {
             <h2 className="text-2xl font-interface">Acquired Tools</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {playerProfile.acquiredTools.map(tool => (
+            {tools?.map(tool => (
               <div key={tool.id} className="flex items-center gap-3 p-4 bg-dream-zone-bg rounded-lg">
                 <span className="text-2xl">{tool.icon}</span>
                 <span className="font-interface">{tool.name}</span>
@@ -82,7 +70,7 @@ export default function UserProfilePage() {
             <h2 className="text-2xl font-interface">AI Node Partners</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {playerProfile.inventoryNodes.map(node => (
+            {aiNodes?.map(node => (
               <div key={node.id} className="flex items-center gap-3 p-4 bg-dream-zone-bg rounded-lg">
                 <span className="text-2xl">{node.icon}</span>
                 <div>

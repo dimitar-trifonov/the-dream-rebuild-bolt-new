@@ -1,28 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Target, Leaf, Users } from 'lucide-react';
-
-const goals = [
-  {
-    id: 'restore-nature',
-    title: 'Restore Nature',
-    description: 'Goal description...',
-    themeColor: 'bg-dream-primary',
-    icon: <Leaf className="w-8 h-8" />,
-    worldPhilosophy: 'Nature will return if given space...',
-  },
-  {
-    id: 'rebuild-community',
-    title: 'Rebuild Community Trust',
-    description: 'Goal description...',
-    themeColor: 'bg-dream-secondary',
-    icon: <Users className="w-8 h-8" />,
-    worldPhilosophy: 'Trust grows through shared experiences...',
-  },
-];
+import { Target } from 'lucide-react';
+import { useGameData } from '../hooks/useGameData';
 
 export default function GoalSelectionPage() {
   const navigate = useNavigate();
+  const { goals } = useGameData();
 
   const handleSelectGoal = (goalId: string) => {
     // In a real app, this would set the goal in PlayerProfile
@@ -48,7 +31,7 @@ export default function GoalSelectionPage() {
               className="bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition text-left group"
             >
               <div className="flex items-start gap-4">
-                <div className={`${goal.themeColor} p-3 rounded-lg text-white`}>
+                <div className={`${goal.themeColor} p-3 rounded-lg text-white text-2xl`}>
                   {goal.icon}
                 </div>
                 <div>
