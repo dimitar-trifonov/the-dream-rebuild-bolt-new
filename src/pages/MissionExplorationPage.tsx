@@ -145,44 +145,46 @@ export default function MissionExplorationPage() {
                       }}
                       disabled={!isValidNextMove}
                       className={`
-                        aspect-square rounded-lg p-2 flex items-center justify-center
+                        aspect-square rounded-lg p-2 flex items-center justify-center relative
                         transition-all duration-200
                         ${isCurrentPosition ? 'ring-2 ring-dream-primary' : ''}
                         ${isValidNextMove ? 'hover:bg-dream-primary/10 cursor-pointer' : 'cursor-not-allowed'}
                         ${terrain?.timeCost === null ? 'bg-gray-200' : 'bg-dream-zone-bg'}
                       `}
-                      style={{ position: 'relative' }}
                     >
                       {location?.items.map((item, idx) => {
                         if (item.type === 'terrain') {
                           const terrainData = currentWorld.terrain.find(t => t.id === item.id);
                           return (
-                            <span key={idx} className="absolute bottom-1 right-1 text-2xl opacity-50">
-                              {terrainData?.icon}
+                            <span key={idx} className="absolute bottom-1 right-1 text-xs opacity-50">
+                              <span className="text-xs">{terrainData?.icon}</span>
                             </span>
                           );
                         }
                         if (item.type === 'tools') {
                           const tool = currentWorld.tools.find(t => t.id === item.id);
                           return (
-                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl">
-                              <Tool className="w-6 h-6 text-dream-primary" />
+                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                              <Tool className="w-4 h-4 text-dream-primary" />
+                              <span className="text-xs mt-1">{tool?.name}</span>
                             </span>
                           );
                         }
                         if (item.type === 'aiNodes') {
                           const node = currentWorld.aiNodes.find(n => n.id === item.id);
                           return (
-                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl">
-                              <Bot className="w-6 h-6 text-dream-primary" />
+                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                              <Bot className="w-4 h-4 text-dream-primary" />
+                              <span className="text-xs mt-1">{node?.name}</span>
                             </span>
                           );
                         }
                         if (item.type === 'worldEvents') {
                           const event = currentWorld.worldEvents.find(e => e.id === item.id);
                           return (
-                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl">
-                              <Target className="w-6 h-6 text-dream-contrast" />
+                            <span key={idx} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                              <Target className="w-4 h-4 text-dream-contrast" />
+                              <span className="text-xs mt-1">{event?.name}</span>
                             </span>
                           );
                         }
