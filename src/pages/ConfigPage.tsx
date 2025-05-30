@@ -7,7 +7,7 @@ import { usePlayerState } from '../hooks/usePlayerState';
 export default function ConfigPage() {
   const navigate = useNavigate();
   const { playerState, actions } = usePlayerState();
-  const { goals, zones, skills, tools, aiNodes, currentWorld } = useGameData(playerState.selectedGoalId);
+  const { goals, zones, skills, tools, aiNodes, currentWorld, currentGoal } = useGameData(playerState.selectedGoalId);
 
   const handleGoalSelect = (goalId: string) => {
     actions.setGoal(goalId);
