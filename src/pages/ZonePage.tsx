@@ -29,6 +29,16 @@ export default function ZonePage() {
       </header>
 
       <main className="max-w-5xl mx-auto">
+        <div className="flex justify-end mb-6">
+          <button
+            onClick={() => navigate(`/zone/${zoneId}/explore`)}
+            className="bg-dream-primary hover:bg-dream-primary-hover text-white px-4 py-2 rounded-lg transition flex items-center gap-2"
+          >
+            <Map className="w-5 h-5" />
+            Explore Zone
+          </button>
+        </div>
+
         {/* Missions */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">

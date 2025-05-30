@@ -7,6 +7,7 @@ import GoalSelectionPage from './pages/GoalSelectionPage'
 import WorldMapPage from './pages/WorldMapPage'
 import ZonePage from './pages/ZonePage'
 import MissionPage from './pages/MissionPage'
+import MissionExplorationPage from './pages/MissionExplorationPage'
 import UserProfilePage from './pages/UserProfilePage'
 import Navigation from './components/Navigation'
 
@@ -24,6 +25,7 @@ function App() {
             <Route path="/map" element={<WorldMapPage />} />
             <Route path="/zone/:zoneId" element={<ZonePage />} />
             <Route path="/mission/:missionId" element={<MissionPage />} />
+            <Route path="/zone/:zoneId/explore" element={<MissionExplorationPage />} />
             <Route path="/inventory" element={<UserProfilePage />} />
           </Routes>
         </main>
