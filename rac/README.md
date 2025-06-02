@@ -1,4 +1,4 @@
-# 📘 The Dream — RaC System Overview
+# 📘 The Dream — RaC System Overview (MVP)
 
 This README provides an overview of the Requirements as Code (RaC) architecture used to implement **The Dream**, a goal-driven restoration game powered by frontend-only logic and LLM support.
 
@@ -21,13 +21,13 @@ This README provides an overview of the Requirements as Code (RaC) architecture 
 
 ---
 
-## 🌍 Game-Specific Concepts
+## 🌍 MVP Game Concepts
 
 This RaC implementation is custom-tailored for *The Dream*, but the structure is reusable.
 
 ### Key Entities
 - **PlayerProfile**: Tracks goal, skills, tools, and progress
-- **WorldState**: Tracks zones, events, harmony, and restoration status
+- **WorldState**: Tracks zones, events, and harmony status
 - **Mission/Event**: Themed challenges to be fixed by time-limited interaction
 
 ### Event Modeling
@@ -37,7 +37,7 @@ Each action is a structured YAML file:
 - `actions`: what the app changes (state, logs, rewards)
 
 ### Examples:
-- `fix-world-event.rac.yaml`
+- `start-mission.rac.yaml`
 - `collect-tool.rac.yaml`
 - `train-skill.rac.yaml`
 
@@ -65,7 +65,7 @@ Use each `.rac.yaml` file to:
 
 Prompt example:
 ```bash
-"Create the UI page based on /rac/ui/zone-view.rac.yaml. Use Tailwind and Dream’s design system."
+"Create the UI page based on /rac/ui/zone-view.rac.yaml. Use Tailwind and Dream's design system."
 ```
 
 ---
@@ -96,15 +96,12 @@ The Dream
 ├── Config (/config)
 ├── Inventory (/inventory)
 ├── Choose Goal (/choose-goal)
-│   ├── Restore Verdantia
-│   │   └── /zone/:id → Zone View
-│   │       ├── player-profile.rac.yaml
-│   │       ├── world-state.rac.yaml
-│   │       ├── zone-navigation.rac.yaml
-│   │       ├── harmony-system.rac.yaml
-│   │       └── world-data (game-structure.rac.yaml)
-│   ├── Renew Eterna
-│   ├── Reclaim Ashen
+│   └── /zone/:id → Zone View
+│       ├── player-profile.rac.yaml
+│       ├── world-state.rac.yaml
+│       ├── zone-navigation.rac.yaml
+│       ├── harmony-system.rac.yaml
+│       └── world-data (game-structure.rac.yaml)
 └── Mission Detail (/mission/:id)
 
 Supporting Layers:
@@ -118,6 +115,7 @@ Supporting Layers:
   - harmony-system.test
   - zone-accessibility.test
   - player-profile.test
+  - user-profile-page.test
 ```
 
 This sitemap shows how UI routes and gameplay logic connect through RaC components.
