@@ -20,9 +20,12 @@ formulas:
   SkillTrainingTime:
     choices:
       - selfTrainingTime if skill.canSelfTrain
-      - aiNode.training.shortTerm
-      - aiNode.training.mastery
+      - aiNode.training.shortTerm if using AI Node
+      - aiNode.training.mastery if using AI Node for mastery
     note: "Skill can only be trained one way per session"
+    timeTracking:
+      - "Add training time to player.timeTracking.totalTime immediately"
+      - "Update player.timeTracking.lastUpdateTimestamp"
 
   AITrainingTime:
     formula: "sum(aiNode.dataEngineeringTime for each activated node)"

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Home, Map, Package, Settings, Palette } from 'lucide-react';
+import { Home, Map, Package, Settings, Palette, Play } from 'lucide-react';
 
 interface NavLinkProps {
   href: string;
@@ -88,6 +88,12 @@ export default function Navigation() {
           icon={<Home className="w-5 h-5" />}
           label="Home"
           isActive={currentPath === '/'}
+        />
+        <NavLink 
+          href="/choose-goal"
+          icon={<Play className="w-5 h-5" />}
+          label="Play"
+          isActive={currentPath === '/choose-goal'}
         />
         <NavLink 
           href="/map"

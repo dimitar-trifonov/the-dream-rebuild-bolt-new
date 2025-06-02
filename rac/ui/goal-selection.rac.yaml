@@ -1,0 +1,48 @@
+# 📘 goal-selection.rac.yaml
+
+component: GoalSelectionPage
+visibleAlways: true
+
+elements:
+  - GoalList
+  - GoalDetails
+  - SelectGoalButton
+
+bindings:
+  GoalList:
+    value: "world.goals"
+    onSelect:
+      event: "SetGoal"
+      input:
+        - goalId: string
+      actions:
+        - "If goal is completed:"
+          - "Set player.selectedGoal = goalId"
+          - "Load world data"
+          - "Redirect to /map"
+        - "Else:"
+          - "Reset player profile"
+          - "Set new goal"
+          - "Load world data"
+          - "Redirect to /map"
+
+  GoalDetails:
+    visibleIf: "selectedGoal != null"
+    source: "selectedGoal"
+
+  SelectGoalButton:
+    visibleIf: "selectedGoal != null"
+    onClick:
+      event: "SetGoal"
+      input:
+        - goalId: "selectedGoal.id"
+      actions:
+        - "If goal is completed:"
+          - "Set player.selectedGoal = goalId"
+          - "Load world data"
+          - "Redirect to /map"
+        - "Else:"
+          - "Reset player profile"
+          - "Set new goal"
+          - "Load world data"
+          - "Redirect to /map" 

@@ -1,0 +1,37 @@
+# 📘 set-goal.rac.yaml
+
+event: SetGoal
+trigger: "user selects a new goal"
+
+parameters:
+  - goalId: string
+
+conditions:
+  - "goalId exists in world.goals"
+
+actions:
+  # Check if the goal was previously completed
+  - "If all zones in goal are restored:"
+    - "Set player.selectedGoal = goalId"
+    - "Load world data for selected goal"
+    - "Set player.availableMissions from world.missions"
+    - "Log SetGoal to player action log"
+  # If goal was not completed, reset state
+  - "Else:"
+  - "Clear player.learnedSkills"
+  - "Clear player.skillsInTraining"
+  - "Clear player.acquiredTools"
+  - "Clear player.inventoryNodes"
+  - "Clear player.missionsCompleted"
+  - "Clear player.missionsInProgress"
+  - "Clear player.worldZonesRestored"
+    - "Clear player.restoredEvents"
+  - "Clear player.currentMissionId"
+  - "Clear player.availableMissions"
+  - "Reset player.currentLocation to default"
+  - "Reset player.timeTracking.totalTime to 0"
+  - "Reset player.currentHarmonyScore to 0"
+  - "Set player.selectedGoal = goalId"
+  - "Load world data for selected goal"
+  - "Set player.availableMissions from world.missions"
+  - "Log SetGoal to player action log" 

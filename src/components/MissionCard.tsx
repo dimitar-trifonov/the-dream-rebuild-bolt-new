@@ -6,13 +6,13 @@ import { usePlayerState } from '../hooks/usePlayerState';
 
 type MissionCardProps = {
   missionId: string;
-  zoneId: string;
 };
 
-export default function MissionCard({ missionId, zoneId }: MissionCardProps) {
+export default function MissionCard({ missionId }: MissionCardProps) {
   const navigate = useNavigate();
   const { playerState, actions } = usePlayerState();
-  const { currentWorld } = useGameData(playerState.selectedGoalId);
+  console.log('playerState', playerState);
+  const { currentWorld } = useGameData(playerState.selectedGoalId || undefined);
   const [isTrainingModalOpen, setIsTrainingModalOpen] = useState(false);
 
   const mission = currentWorld?.missions.find(m => m.id === missionId);

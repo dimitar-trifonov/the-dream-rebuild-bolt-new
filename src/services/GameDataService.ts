@@ -10,6 +10,34 @@ export type Goal = {
   tone: string;
 };
 
+export type Mission = {
+  id: string;
+  name: string;
+  goal: string;
+  obstacles: string;
+  approachRequiredSkills: string[];
+  harmonyReward: number;
+};
+
+export type WorldEvent = {
+  id: string;
+  name: string;
+  description: string;
+  requiredSkills: string[];
+  requiredTools: string[];
+  timeToFix: string;
+  eventTimeLimit: string;
+  icon: string;
+  harmonyReward: number;
+};
+
+export type Terrain = {
+  id: string;
+  terrainType: string;
+  timeCost: number | null;
+  icon: string;
+};
+
 export type World = {
   worldPrompt: {
     worldThemes: string[];
@@ -47,6 +75,9 @@ export type World = {
       mastery: string;
     };
   }>;
+  missions: Mission[];
+  worldEvents: WorldEvent[];
+  terrain: Terrain[];
   zones: Array<{
     id: string;
     name: string;
@@ -57,7 +88,7 @@ export type World = {
       coordinates: number[];
       items: Array<{
         type: string;
-        id: string;
+        id?: string;
       }>;
     }>;
   }>;
@@ -68,7 +99,7 @@ export type GameConfig = Array<{
   world: World;
 }>;
 
-class GameDataService {
+export class GameDataService {
   private config: GameConfig;
 
   constructor() {
@@ -102,6 +133,19 @@ class GameDataService {
 
   getAINodes(goalId: string): World['aiNodes'] | undefined {
     return this.getWorldByGoalId(goalId)?.aiNodes;
+  }
+
+  getEventsToResolve(goalId: string): string[] {
+    const world = this.getWorldByGoalId(goalId);
+    if (!world) return [];
+    
+    // Get all event IDs from all zones
+    return world.zones.flatMap(zone => 
+      zone.locations
+        .filter(loc => loc.items.some(item => item.type === 'worldEvents'))
+        .map(loc => loc.items.find(item => item.type === 'worldEvents')?.id)
+        .filter((id): id is string => id !== undefined)
+    );
   }
 }
 

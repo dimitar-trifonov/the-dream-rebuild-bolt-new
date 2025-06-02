@@ -59,7 +59,6 @@ export default function ZonePage() {
               <MissionCard 
                 key={missionId}
                 missionId={missionId}
-                zoneId={zone.id}
               />
             ))}
           </div>

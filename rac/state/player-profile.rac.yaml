@@ -3,22 +3,99 @@
 entity: PlayerProfile
 fields:
   id: string
+    description: "Unique identifier for the player profile"
+  
   name: string
-  selectedGoal: string
-  currentHarmonyScore: int
+    description: "Player's display name"
+  
+  selectedGoalId: string
+    description: "ID of the currently selected goal"
+    nullable: false
+  
   learnedSkills: list[string]
+    description: "List of skill IDs that the player has learned in the current goal"
+    resetOnNewGoal: true
+  
   skillsInTraining: list[string]
+    description: "List of skill IDs that are currently being trained"
+    resetOnNewGoal: true
+  
   acquiredTools: list[string]
+    description: "List of tool IDs that the player has acquired in the current goal"
+    resetOnNewGoal: true
+  
   inventoryNodes: list[string]
+    description: "List of AI node IDs that the player has partnered with"
+    resetOnNewGoal: true
+  
   missionsCompleted: list[string]
+    description: "List of mission IDs that have been completed in the current goal"
+    resetOnNewGoal: true
+  
   missionsInProgress: list[string]
-  worldZonesRestored: list[string]
-  currentMissionId: string
+    description: "List of mission IDs that are currently in progress"
+    resetOnNewGoal: true
+  
+  restoredEvents: list[string]
+    description: "List of event IDs that have been restored in the current goal"
+    resetOnNewGoal: true
+  
+  currentMissionId: string | null
+    description: "ID of the currently active mission, if any"
+    nullable: true
+  
   availableMissions: list[string]
+    description: "List of mission IDs that are available to start"
+    resetOnNewGoal: true
+  
   currentLocation: map{x: int, y: int}
+    description: "Current coordinates in the world map"
+    resetOnNewGoal: true
+  
   lastActiveTimestamp: string
+    description: "ISO timestamp of the last player action"
+  
   timeTracking:
     totalTime: int
+      description: "Total time spent in the current goal (in hours)"
+      resetOnNewGoal: true
+    
     currentEventTimeLimit: int
+      description: "Time limit for the current event (in hours)"
+      nullable: true
+    
+    currentEventId: string | null
+      description: "ID of the currently active event, if any"
+      nullable: true
+    
     lastUpdateTimestamp: string
+      description: "ISO timestamp of the last time tracking update"
+
+stateManagement:
+  onGoalChange:
+    - "If goal is completed: preserve state"
+    - "If goal is new: reset all resetOnNewGoal fields"
+    - "Update selectedGoalId"
+    - "Load new goal's world data"
+    - "Reset currentLocation to default"
+    - "Clear timeTracking.currentEventId and currentEventTimeLimit"
+  
+  onMissionComplete:
+    - "Add mission ID to missionsCompleted"
+    - "Remove mission ID from missionsInProgress"
+    - "Clear currentMissionId"
+    - "Update harmony progress"
+  
+  onEventRestore:
+    - "Add event ID to restoredEvents"
+    - "Clear currentEventId and currentEventTimeLimit"
+    - "Update harmony progress"
+    - "Check if zone is fully restored"
+
+notes: >
+  - All lists (learnedSkills, acquiredTools, etc.) are scoped to the current goal
+  - State is reset when switching to a new goal (except for completed goals)
+  - Harmony progress is calculated per goal using missionsCompleted and restoredEvents
+  - currentLocation tracks the player's position in the current goal's world
+  - Time tracking is maintained per goal and reset when starting a new goal
 

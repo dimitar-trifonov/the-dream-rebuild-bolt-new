@@ -9,6 +9,7 @@ elements:
   - StartMissionButton
   - FixEventButton
   - AIHelpHint
+  - TrainingModal
 
 bindings:
   FixEventButton:
@@ -21,6 +22,27 @@ bindings:
       event: "StartMission"
       input:
         - missionId: string
+      conditions:
+        - "mission.approachRequiredSkills ⊆ player.learnedSkills"
+
+  TrainingModal:
+    visibleIf: "mission.approachRequiredSkills ⊈ player.learnedSkills"
+    elements:
+      - missingSkillsList
+      - trainingOptions
+      - closeButton
+    bindings:
+      missingSkillsList:
+        value: "mission.approachRequiredSkills - player.learnedSkills"
+      trainingOptions:
+        selfTraining:
+          visibleIf: "skill.canSelfTrain"
+          timeCost: "skill.selfTrainingTime"
+        aiNodeTraining:
+          visibleIf: "aiNode in player.inventoryNodes"
+          timeCost: "aiNode.training.shortTerm"
+      closeButton:
+        onClick: "CloseTrainingModal"
 
 actions:
   - "Add missionId to player.missionsInProgress"

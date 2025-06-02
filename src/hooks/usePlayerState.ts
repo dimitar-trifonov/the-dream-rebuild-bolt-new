@@ -55,8 +55,16 @@ export function usePlayerState() {
       playerStateService.restoreZone(zoneId);
       refreshState();
     },
+    addRestoredEvent: (eventId: string) => {
+      playerStateService.addRestoredEvent(eventId);
+      refreshState();
+    },
     updateLocation: (x: number, y: number) => {
       playerStateService.updateLocation(x, y);
+      refreshState();
+    },
+    addTime: (hours: number) => {
+      playerStateService.addTime(hours);
       refreshState();
     },
     resetState: () => {

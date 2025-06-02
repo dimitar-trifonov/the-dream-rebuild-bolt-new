@@ -25,5 +25,6 @@ export function useGameData(goalId?: string) {
     skills: goalId ? gameDataService.getSkills(goalId) : undefined,
     tools: goalId ? gameDataService.getTools(goalId) : undefined,
     aiNodes: goalId ? gameDataService.getAINodes(goalId) : undefined,
+    eventsToResolve: goalId ? gameDataService.getEventsToResolve(goalId) : undefined,
   };
 }

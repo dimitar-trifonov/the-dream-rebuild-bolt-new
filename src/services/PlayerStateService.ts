@@ -10,10 +10,12 @@ export interface PlayerState {
   missionsCompleted: string[];
   missionsInProgress: string[];
   worldZonesRestored: string[];
+  restoredEvents: string[];
   currentLocation: { x: number; y: number } | null;
   timeTracking: {
     totalTime: number;
     currentEventTimeLimit: number | null;
+    currentEventId: string | null;
     lastUpdateTimestamp: string;
   };
 }
@@ -30,10 +32,12 @@ const initialState: PlayerState = {
   missionsCompleted: [],
   missionsInProgress: [],
   worldZonesRestored: [],
+  restoredEvents: [],
   currentLocation: null,
   timeTracking: {
     totalTime: 0,
     currentEventTimeLimit: null,
+    currentEventId: null,
     lastUpdateTimestamp: new Date().toISOString(),
   },
 };
@@ -43,11 +47,14 @@ class PlayerStateService {
 
   constructor() {
     this.state = this.loadState();
+    if (this.state === initialState) {
+      this.state = JSON.parse(JSON.stringify(initialState));
+    }
   }
 
   private loadState(): PlayerState {
     const savedState = localStorage.getItem(STORAGE_KEY);
-    return savedState ? JSON.parse(savedState) : { ...initialState };
+    return savedState ? JSON.parse(savedState) : JSON.parse(JSON.stringify(initialState));
   }
 
   private saveState(): void {
@@ -55,10 +62,28 @@ class PlayerStateService {
   }
 
   getState(): PlayerState {
-    return { ...this.state };
+    return this.state;
   }
 
   setGoal(goalId: string): void {
+    // If selecting a different goal, reset the state
+    if (this.state.selectedGoalId !== goalId) {
+      // Create a new state object with all fields reset to initial values
+      const newState = {
+        ...JSON.parse(JSON.stringify(initialState)),
+        selectedGoalId: goalId,
+        timeTracking: {
+          ...initialState.timeTracking,
+          lastUpdateTimestamp: new Date().toISOString(),
+        }
+      };
+      
+      this.state = newState;
+      this.saveState();
+      return;
+    }
+
+    // If selecting the same goal, just update the selected goal
     this.state.selectedGoalId = goalId;
     this.saveState();
   }
@@ -116,8 +141,21 @@ class PlayerStateService {
     this.saveState();
   }
 
+  addTime(hours: number): void {
+    this.state.timeTracking.totalTime += hours;
+    this.state.timeTracking.lastUpdateTimestamp = new Date().toISOString();
+    this.saveState();
+  }
+
+  addRestoredEvent(eventId: string): void {
+    if (!this.state.restoredEvents.includes(eventId)) {
+      this.state.restoredEvents.push(eventId);
+      this.saveState();
+    }
+  }
+
   resetState(): void {
-    this.state = { ...initialState };
+    this.state = JSON.parse(JSON.stringify(initialState));
     this.saveState();
   }
 }

@@ -1,0 +1,95 @@
+# 📘 user-profile-page.test.yaml
+
+test: UserProfilePage
+
+tests:
+  - name: "Displays goal information correctly"
+    given:
+      player:
+        selectedGoalId: "goal1"
+      world:
+        goals:
+          - id: "goal1"
+            title: "Restore Verdantia"
+            description: "Bring life back to the forest"
+    expect:
+      ui:
+        GoalHeader:
+          title: "Restore Verdantia"
+          description: "Bring life back to the forest"
+          visible: true
+
+  - name: "Shows harmony progress correctly"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        missionsCompleted: ["mission1"]
+        restoredEvents: ["event1"]
+      world:
+        goals:
+          - id: "goal1"
+            zones:
+              - id: "zone1"
+                missions: ["mission1"]
+                locations:
+                  - items:
+                    - type: "worldEvents"
+                      id: "event1"
+        missions:
+          - id: "mission1"
+            harmonyReward: 10
+        worldEvents:
+          - id: "event1"
+            harmonyReward: 15
+    expect:
+      ui:
+        HarmonySummary:
+          progress: 100
+          earned: 25
+          total: 25
+          visible: true
+
+  - name: "Displays learned skills"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        learnedSkills: ["skill1", "skill2"]
+      world:
+        goals:
+          - id: "goal1"
+            skills:
+              - id: "skill1"
+                name: "Forest Lore"
+                icon: "🌲"
+              - id: "skill2"
+                name: "Water Magic"
+                icon: "💧"
+    expect:
+      ui:
+        SkillInventory:
+          items:
+            - name: "Forest Lore"
+              icon: "🌲"
+            - name: "Water Magic"
+              icon: "💧"
+          visible: true
+
+  - name: "Shows fallback when no goal selected"
+    given:
+      player:
+        selectedGoalId: null
+    expect:
+      ui:
+        fallback:
+          message: "Please select a goal to view your progress"
+          visible: true
+        GoalHeader:
+          visible: false
+        HarmonySummary:
+          visible: false
+        SkillInventory:
+          visible: false
+        ToolInventory:
+          visible: false
+        AINodeInventory:
+          visible: false 

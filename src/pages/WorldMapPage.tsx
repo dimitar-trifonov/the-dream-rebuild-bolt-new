@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map as MapIcon, Target, PenTool as Tool, Bot } from 'lucide-react';
+import { Map as MapIcon, Target, PenTool as Tool, Bot, CheckCircle } from 'lucide-react';
 import { useGameData } from '../hooks/useGameData';
 import { usePlayerState } from '../hooks/usePlayerState';
 
@@ -15,12 +15,37 @@ export default function WorldMapPage() {
   }
 
   const handleZoneClick = (zoneId: string) => {
+    const zone = zones.find(z => z.id === zoneId);
+    if (!zone) return;
+
+    // Don't allow navigation if zone is fully completed
+    if (isZoneFullyCompleted(zone)) {
+      return;
+    }
+
     navigate(`/zone/${zoneId}`);
   };
 
-  const getZoneStatus = (zoneId: string) => {
-    if (playerState.worldZonesRestored.includes(zoneId)) return 'Restored';
-    if (playerState.missionsCompleted.some(mId => zones.find(z => z.id === zoneId)?.missions.includes(mId))) return 'Healing';
+  const isZoneFullyCompleted = (zone: typeof zones[0]) => {
+    // Check if all missions in the zone are completed
+    const allMissionsCompleted = zone.missions.every(missionId => 
+      playerState.missionsCompleted.includes(missionId)
+    );
+
+    // Check if all events in the zone are restored
+    const allEventsRestored = zone.locations
+      .filter(loc => loc.items.some(item => item.type === 'worldEvents'))
+      .map(loc => loc.items.find(item => item.type === 'worldEvents')?.id)
+      .filter((id): id is string => id !== undefined)
+      .every(eventId => playerState.restoredEvents.includes(eventId));
+
+    return allMissionsCompleted && allEventsRestored;
+  };
+
+  const getZoneStatus = (zone: typeof zones[0]) => {
+    if (isZoneFullyCompleted(zone)) return 'Completed';
+    if (playerState.worldZonesRestored.includes(zone.id)) return 'Restored';
+    if (playerState.missionsCompleted.some(mId => zone.missions.includes(mId))) return 'Healing';
     return 'Damaged';
   };
 
@@ -31,6 +56,26 @@ export default function WorldMapPage() {
       aiNodes: zone.locations.filter(loc => loc.items.some(item => item.type === 'aiNodes')).length,
     };
     return items;
+  };
+
+  const getZoneCompletionDetails = (zone: typeof zones[0]) => {
+    const completedMissions = zone.missions.filter(missionId => 
+      playerState.missionsCompleted.includes(missionId)
+    );
+    const totalMissions = zone.missions.length;
+    const completedEvents = zone.locations
+      .filter(loc => loc.items.some(item => item.type === 'worldEvents'))
+      .map(loc => loc.items.find(item => item.type === 'worldEvents')?.id)
+      .filter((id): id is string => id !== undefined)
+      .filter(eventId => playerState.restoredEvents.includes(eventId));
+    const totalEvents = zone.locations.filter(loc => 
+      loc.items.some(item => item.type === 'worldEvents')
+    ).length;
+
+    return {
+      missions: { completed: completedMissions.length, total: totalMissions },
+      events: { completed: completedEvents.length, total: totalEvents }
+    };
   };
 
   return (
@@ -44,37 +89,56 @@ export default function WorldMapPage() {
       </header>
 
       <main className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {zones.map((zone) => {
+        <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {zones.map(zone => {
+            const status = getZoneStatus(zone);
             const items = getZoneItems(zone);
-            const status = getZoneStatus(zone.id);
-            
+            const completion = getZoneCompletionDetails(zone);
+            const isCompleted = status === 'Completed';
+
             return (
-            <button
-              key={zone.id}
-              onClick={() => handleZoneClick(zone.id)}
-              className={`bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition text-left group ${
-                status === 'Restored' ? 'border-2 border-harmony-high' : ''
-              }`}
-            >
-              <div className="flex items-start gap-4">
-                <div className={`${currentGoal.themeColor} p-3 rounded-lg text-white text-2xl`}>
-                  {currentGoal.icon}
+              <div
+                key={zone.id}
+                onClick={() => handleZoneClick(zone.id)}
+                className={`
+                  bg-white rounded-2xl p-6 shadow-md cursor-pointer
+                  transition-all duration-200
+                  ${isCompleted ? 'opacity-75 cursor-not-allowed' : 'hover:shadow-lg'}
+                `}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-interface">{zone.name}</h2>
+                  {isCompleted && (
+                    <CheckCircle className="w-6 h-6 text-harmony-high" />
+                  )}
                 </div>
-                <div>
-                  <h2 className="text-xl font-interface mb-2 group-hover:text-dream-primary transition">
-                    {zone.name}
-                  </h2>
-                  <div className="flex items-center gap-2 mb-2 text-sm text-gray-600">
-                    <span className={`px-2 py-1 rounded-full ${
-                      status === 'Restored' ? 'bg-harmony-high text-white' :
-                      status === 'Healing' ? 'bg-harmony-mid text-white' :
-                      'bg-harmony-low'
-                    }`}>
-                      {status}
-                    </span>
+
+                <div className="space-y-4">
+                  {/* Status Badge */}
+                  <div className={`
+                    inline-block px-3 py-1 rounded-full text-sm
+                    ${status === 'Completed' ? 'bg-harmony-high/10 text-harmony-high' :
+                      status === 'Restored' ? 'bg-dream-primary/10 text-dream-primary' :
+                      status === 'Healing' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'}
+                  `}>
+                    {status}
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
+
+                  {/* Completion Progress */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Missions</span>
+                      <span>{completion.missions.completed}/{completion.missions.total}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span>Events</span>
+                      <span>{completion.events.completed}/{completion.events.total}</span>
+                    </div>
+                  </div>
+
+                  {/* Zone Items */}
+                  <div className="flex items-center gap-4 text-sm text-gray-600">
                     <div className="flex items-center gap-1">
                       <Target className="w-4 h-4" />
                       <span>{items.missions}</span>
@@ -90,8 +154,8 @@ export default function WorldMapPage() {
                   </div>
                 </div>
               </div>
-            </button>
-          )})}
+            );
+          })}
         </div>
       </main>
     </div>

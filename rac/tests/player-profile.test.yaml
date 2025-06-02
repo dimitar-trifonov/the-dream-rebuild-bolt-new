@@ -6,20 +6,136 @@ tests:
   - name: "Can start mission if skill is available"
     given:
       player:
+        selectedGoalId: "goal1"
         learnedSkills: ["skill1"]
         missionsInProgress: []
-      mission:
-        id: "mission1"
-        approachRequiredSkills: ["skill1"]
+      world:
+        goals:
+          - id: "goal1"
+            missions:
+              - id: "mission1"
+                approachRequiredSkills: ["skill1"]
     expect:
       canStartMission: true
 
   - name: "Cannot collect tool without skill"
     given:
       player:
+        selectedGoalId: "goal1"
         learnedSkills: []
-      tool:
-        requiredSkills: ["skill2"]
+      world:
+        goals:
+          - id: "goal1"
+            tools:
+              - id: "tool1"
+                requiredSkills: ["skill2"]
     expect:
       canCollectTool: false
+
+  - name: "Goal change resets player profile"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        learnedSkills: ["skill1", "skill2"]
+        acquiredTools: ["tool1"]
+        inventoryNodes: ["node1"]
+        missionsCompleted: ["mission1"]
+        missionsInProgress: ["mission2"]
+        restoredEvents: ["event1"]
+        timeTracking:
+          totalTime: 50
+          currentEventId: "event1"
+          currentEventTimeLimit: 2
+      newGoal:
+        id: "goal2"
+        zones:
+          - id: "zone1"
+            missions: ["mission3"]
+            locations:
+              - items:
+                - type: "worldEvents"
+                  id: "event2"
+    when:
+      event: "SetGoal"
+      input:
+        goalId: "goal2"
+    expect:
+      player:
+        selectedGoalId: "goal2"
+        learnedSkills: []
+        acquiredTools: []
+        inventoryNodes: []
+        missionsCompleted: []
+        missionsInProgress: []
+        restoredEvents: []
+        timeTracking:
+          totalTime: 0
+          currentEventId: null
+          currentEventTimeLimit: null
+
+  - name: "Selecting completed goal preserves state"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        learnedSkills: ["skill1"]
+        acquiredTools: ["tool1"]
+        restoredEvents: ["event1", "event2"]
+        missionsCompleted: ["mission1", "mission2"]
+      completedGoal:
+        id: "goal2"
+        zones:
+          - id: "zone1"
+            missions: ["mission3"]
+            locations:
+              - items:
+                - type: "worldEvents"
+                  id: "event3"
+          - id: "zone2"
+            missions: ["mission4"]
+            locations:
+              - items:
+                - type: "worldEvents"
+                  id: "event4"
+      world:
+        goals:
+          - id: "goal2"
+            zones:
+              - id: "zone1"
+              - id: "zone2"
+    when:
+      event: "SetGoal"
+      input:
+        goalId: "goal2"
+    expect:
+      player:
+        selectedGoalId: "goal2"
+        learnedSkills: ["skill1"]
+        acquiredTools: ["tool1"]
+        restoredEvents: ["event1", "event2"]
+        missionsCompleted: ["mission1", "mission2"]
+
+  - name: "Time tracking updates correctly"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        timeTracking:
+          totalTime: 10
+          currentEventId: "event1"
+          currentEventTimeLimit: 2
+          lastUpdateTimestamp: "2024-01-01T00:00:00Z"
+      world:
+        worldEvents:
+          - id: "event1"
+            eventTimeLimit: "2h"
+    when:
+      event: "UpdateTime"
+      input:
+        timeSpent: 1
+    expect:
+      player:
+        timeTracking:
+          totalTime: 11
+          currentEventId: "event1"
+          currentEventTimeLimit: 2
+          lastUpdateTimestamp: "2024-01-01T01:00:00Z"
 

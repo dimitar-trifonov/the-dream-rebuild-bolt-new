@@ -6,27 +6,114 @@ tests:
   - name: "Harmony increases after mission and event"
     given:
       player:
+        selectedGoalId: "goal1"
         missionsCompleted: ["mission1"]
-        currentHarmonyScore: 0
+        restoredEvents: ["event1"]
       world:
+        goals:
+          - id: "goal1"
+            zones:
+              - id: "zone1"
+                missions: ["mission1"]
+                locations:
+                  - items:
+                    - type: "worldEvents"
+                      id: "event1"
         missions:
           - id: "mission1"
             harmonyReward: 10
         worldEvents:
           - id: "event1"
             harmonyReward: 15
-            status: "resolved"
     expect:
-      player.currentHarmonyScore: 25
+      harmonyProgress:
+        earned: 25
+        total: 25
+        percentage: 100
+
+  - name: "Harmony resets on new goal"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        missionsCompleted: ["mission1"]
+        restoredEvents: ["event1"]
+      newGoal:
+        id: "goal2"
+        zones:
+          - id: "zone2"
+            missions: ["mission2"]
+            locations:
+              - items:
+                - type: "worldEvents"
+                  id: "event2"
+        missions:
+          - id: "mission2"
+            harmonyReward: 20
+        worldEvents:
+          - id: "event2"
+            harmonyReward: 30
+    when:
+      event: "SetGoal"
+      input:
+        goalId: "goal2"
+    expect:
+      harmonyProgress:
+        earned: 0
+        total: 50
+        percentage: 0
 
   - name: "Victory condition met"
     given:
       player:
-        currentHarmonyScore: 500
+        selectedGoalId: "goal1"
+        missionsCompleted: ["mission1", "mission2"]
+        restoredEvents: ["event1", "event2"]
       world:
-        zoneStatus:
-          zone1: "Restored"
-          zone2: "Restored"
+        goals:
+          - id: "goal1"
+            zones:
+              - id: "zone1"
+                missions: ["mission1"]
+                locations:
+                  - items:
+                    - type: "worldEvents"
+                      id: "event1"
+              - id: "zone2"
+                missions: ["mission2"]
+                locations:
+                  - items:
+                    - type: "worldEvents"
+                      id: "event2"
+        missions:
+          - id: "mission1"
+            harmonyReward: 10
+          - id: "mission2"
+            harmonyReward: 20
+        worldEvents:
+          - id: "event1"
+            harmonyReward: 15
+          - id: "event2"
+            harmonyReward: 25
     expect:
+      harmonyProgress:
+        earned: 70
+        total: 70
+        percentage: 100
       gameVictory: true
+
+  - name: "Failure condition - time limit exceeded"
+    given:
+      player:
+        selectedGoalId: "goal1"
+        timeTracking:
+          currentEventId: "event1"
+          currentEventTimeLimit: 2
+          totalTime: 3
+      world:
+        worldEvents:
+          - id: "event1"
+            eventTimeLimit: "2h"
+    expect:
+      failureCondition: true
+      reason: "Event time limit exceeded"
 

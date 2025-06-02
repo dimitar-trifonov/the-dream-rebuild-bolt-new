@@ -1,0 +1,17 @@
+# 📘 pick-ai-node.rac.yaml
+
+logic: PickAINode
+
+description: >
+  Defines the logic for picking up an AI Node in the game.
+  This action is only available in the zone cell (grid), not in the Current Location card.
+
+trigger: "player clicks PickMe on AI Node in zone cell (grid)"
+
+conditions:
+  - "player.currentLocation == aiNode.location"
+  - "aiNode.id not in player.inventoryNodes"
+actions:
+  - "Add aiNode.id to player.inventoryNodes"
+  - "Add aiNode.dataEngineeringTime to player.timeTracking.totalTime"
+  - "Log PickAINode to player action log" 

@@ -8,11 +8,14 @@ conditions:
   - "player has all requiredTools from worldEvent.requiredTools"
   - "player.currentLocation == worldEvent.location"
   - "TotalTime(prep + fix) ≤ worldEvent.eventTimeLimit"
+  - "worldEvent.id in worldState.eventsToResolve"
 
 actions:
   - "Set worldEvent.status = 'resolved'"
   - "Add worldEvent.harmonyReward to player.currentHarmonyScore"
-  - "Append worldEvent.id to worldState.eventsResolved"
+  - "Remove worldEvent.id from worldState.eventsToResolve"
+  - "Append worldEvent.id to player.restoredEvents"
   - "Log FixWorldEvent to player action log"
   - "Update zone status if all events are resolved"
+  - "Check if all events in zone are restored and update worldZonesRestored if true"
 

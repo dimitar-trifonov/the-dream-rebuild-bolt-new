@@ -1,0 +1,24 @@
+# 📘 start-mission.rac.yaml
+
+event: StartMission
+trigger: "user clicks Start Mission button"
+
+conditions:
+  - "mission.id not in player.missionsInProgress"
+  - "mission.approachRequiredSkills ⊆ player.learnedSkills"
+
+actions:
+  - "Add mission.id to player.missionsInProgress"
+  - "Set player.currentMissionId = mission.id"
+  - "Log StartMission to player action log"
+
+# New section for training modal
+trainingModal:
+  trigger: "user clicks Start Mission button when skills are missing"
+  conditions:
+    - "mission.approachRequiredSkills ⊈ player.learnedSkills"
+  actions:
+    - "Show training modal"
+    - "Display missing skills"
+    - "Show available training options (self, AI Node)"
+    - "Enable training only for missing skills" 

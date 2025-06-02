@@ -4,19 +4,69 @@ component: UserProfilePage
 visibleIf: "player.selectedGoal != null"
 
 elements:
+  - GoalHeader
+  - HarmonySummary
   - SkillInventory
   - ToolInventory
   - AINodeInventory
-  - HarmonySummary
 
 bindings:
-  SkillInventory:
-    value: player.learnedSkills
-  ToolInventory:
-    value: player.acquiredTools
-  AINodeInventory:
-    value: player.inventoryNodes
+  GoalHeader:
+    title: "currentGoal.title"
+    description: "currentGoal.description"
+    icon: "Target"
+    style:
+      background: "bg-dream-bg"
+      textColor: "text-dream-primary"
+  
   HarmonySummary:
-    value: player.currentHarmonyScore
-    hint: "Progress toward global restoration goal"
+    progress: "calculateHarmonyProgress().progress"
+    earned: "calculateHarmonyProgress().earned"
+    total: "calculateHarmonyProgress().total"
+    icon: "Sparkles"
+    style:
+      progressBar:
+        background: "bg-harmony-high"
+        height: "h-4"
+        rounded: "rounded-full"
+      text:
+        primary: "text-gray-600"
+        secondary: "text-gray-500"
+  
+  SkillInventory:
+    value: "currentWorld.skills.filter(skill => player.learnedSkills.includes(skill.id))"
+    icon: "Book"
+    style:
+      container: "bg-white rounded-2xl p-8 shadow-md"
+      item: "bg-dream-zone-bg rounded-lg p-4"
+      icon: "text-2xl"
+  
+  ToolInventory:
+    value: "currentWorld.tools.filter(tool => player.acquiredTools.includes(tool.id))"
+    icon: "Wrench"
+    style:
+      container: "bg-white rounded-2xl p-8 shadow-md"
+      item: "bg-dream-zone-bg rounded-lg p-4"
+      icon: "text-2xl"
+  
+  AINodeInventory:
+    value: "currentWorld.aiNodes.filter(node => player.inventoryNodes.includes(node.id))"
+    icon: "Bot"
+    style:
+      container: "bg-white rounded-2xl p-8 shadow-md"
+      item: "bg-dream-zone-bg rounded-lg p-4"
+      icon: "text-2xl"
+      role: "text-sm text-gray-600"
+
+layout:
+  container: "min-h-screen bg-dream-bg p-8 font-interface"
+  header: "max-w-5xl mx-auto mb-12"
+  main: "max-w-5xl mx-auto space-y-8"
+
+fallback:
+  when: "player.selectedGoal == null"
+  message: "Please select a goal to view your progress"
+  style:
+    container: "min-h-screen bg-dream-bg p-8 font-interface"
+    text: "text-center"
 

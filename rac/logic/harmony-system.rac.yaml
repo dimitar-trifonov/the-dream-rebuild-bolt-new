@@ -4,17 +4,34 @@ logic: HarmonySystem
 
 description: >
   Defines how Harmony is calculated from player actions and how it's visualized in the UI.
+  Harmony progress is calculated per goal, taking into account both missions and events.
+  Each goal has its own harmony score, which is reset when switching to a new goal.
 
 rules:
-  - Each completed mission adds `mission.harmonyReward` to `player.currentHarmonyScore`
-  - Each resolved world event adds `worldEvent.harmonyReward` to the same
-  - Zones are marked as "Restored" when their mission and event are both complete
+  - Each completed mission adds `mission.harmonyReward` to the goal's harmony score
+  - Each resolved world event adds `worldEvent.harmonyReward` to the goal's harmony score
+  - Harmony progress is calculated as a percentage: (earned harmony / total possible harmony) * 100
+  - Total possible harmony is the sum of all mission and event harmony rewards in the current goal
+  - Earned harmony is the sum of harmony rewards from completed missions and restored events
+  - Harmony rewards are only counted once per mission/event
+  - Harmony progress is preserved for completed goals
+  - Harmony progress is reset to 0 when starting a new goal
 
 formula:
-  currentHarmony = sum(harmonyReward from all completed missions and resolved events)
-  harmonyRatio = currentHarmony / totalHarmonyPossible
+  totalHarmonyPossible = sum(mission.harmonyReward for all missions in goal) + 
+                        sum(event.harmonyReward for all events in goal)
+  
+  earnedHarmony = sum(mission.harmonyReward for completed missions) + 
+                 sum(event.harmonyReward for restored events)
+  
+  harmonyProgress = (earnedHarmony / totalHarmonyPossible) * 100
 
 successCondition:
-  - All zones restored AND
-  - currentHarmonyScore ≥ 500 (or goal-specific threshold)
+  - All zones in the current goal are restored (all events in all zones are in player.restoredEvents)
+  - All missions in the current goal are completed (all mission IDs are in player.missionsCompleted)
+  - Harmony progress reaches 100% for the current goal
+
+failureCondition:
+  - Event time limit is exceeded for any active event
+  - Player cannot complete required missions due to missing skills or tools
 

@@ -1,0 +1,17 @@
+# 📘 pick-tool.rac.yaml
+
+logic: PickTool
+
+description: >
+  Defines the logic for picking up a tool in the game.
+  This action is only available in the zone cell (grid), not in the Current Location card.
+
+trigger: "player clicks PickMe on tool in zone cell (grid)"
+
+conditions:
+  - "player.currentLocation == tool.location"
+  - "tool.id not in player.acquiredTools"
+  - "tool.requiredSkills ⊆ player.learnedSkills"
+actions:
+  - "Add tool.id to player.acquiredTools"
+  - "Log PickTool to player action log" 

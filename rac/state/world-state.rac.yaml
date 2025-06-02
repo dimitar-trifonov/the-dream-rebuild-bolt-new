@@ -5,7 +5,7 @@ fields:
   currentGoalId: string
   zones: list[string]
   zoneStatus: map{string: string}  # values: Damaged, Healing, Restored
-  eventsResolved: list[string]
+  eventsToResolve: list[string]  # list of event IDs that need to be fixed
   toolsInWorld: list[string]
   aiNodesAvailable: list[string]
   harmonyRewardMap: map{string: int}
